@@ -1,5 +1,7 @@
 package clueGame;
 
+import com.sun.javafx.scene.traversal.Direction;
+
 public class BoardCell {
 	private int row;
 	private int column;
@@ -14,12 +16,29 @@ public class BoardCell {
 		this.initial = initial;
 		this.doorDir = d;
 	}
-
+	public BoardCell(int row, int column, char initial, char direction) {
+		super();
+		this.row = row;
+		this.column = column;
+		this.initial = initial;
+		switch (direction)
+		{
+			case 'L': doorDir = DoorDirection.LEFT;
+						break;
+			case 'U': doorDir = DoorDirection.UP;
+						break;
+			case 'R': doorDir = DoorDirection.RIGHT;
+						break;
+			case 'D': doorDir = DoorDirection.DOWN;
+						break;
+			default: doorDir = DoorDirection.NONE;
+		}
+	}
 	public char getInitial() {
 		return initial;
 	}
 
-	public DoorDirection getDoorDir() {
+	public DoorDirection getDoorDirection() {
 		return doorDir;
 	}
 
@@ -31,7 +50,7 @@ public class BoardCell {
 		return true;
 	}
 	
-	public boolean isDoorWay() {
+	public boolean isDoorway() {
 		if (doorDir != DoorDirection.NONE)
 			return true;
 		return false;

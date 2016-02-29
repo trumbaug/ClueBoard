@@ -1,10 +1,10 @@
 package Experiment;
 
-public class BoardCell {
+public class BoardCellEx {
 	private int col;
 	private int row;
 	String type;
-	public BoardCell(int col, int row, String type) {
+	public BoardCellEx(int col, int row, String type) {
 		super();
 		this.col = col;
 		this.row = row;

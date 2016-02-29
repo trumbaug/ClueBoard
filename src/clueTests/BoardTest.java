@@ -54,8 +54,8 @@ public class BoardTest {
 	public void testIsDoor() {
 		BoardCell cell = new BoardCell(0,1,'W',DoorDirection.NONE);
 		assertEquals(board.getNumDoors(),13);
-		assertTrue(cell.getDoorDir() == DoorDirection.DOWN);
-		assertTrue(cell.isDoorWay());
+		assertTrue(cell.getDoorDirection() == DoorDirection.DOWN);
+		assertTrue(cell.isDoorway());
 	}
 	
 	@Test
