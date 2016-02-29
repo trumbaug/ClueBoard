@@ -2,6 +2,7 @@ package clueGame;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -56,7 +57,13 @@ public class Board {
 		}
 		catch (BadConfigFormatException e)
 		{
-			e.getMessage();
+			try {
+				PrintWriter fout = new PrintWriter("LogFileInitialize.txt");
+				fout.println(e);
+				fout.close();
+			} catch (FileNotFoundException e1) {
+				System.out.println("Cannot create file for writing exception");
+			}
 		}
 		catch (FileNotFoundException e)
 		{
@@ -87,6 +94,13 @@ public class Board {
 		} 
 		catch (BadConfigFormatException e)
 		{
+			try {
+				PrintWriter fout = new PrintWriter("LogFileLoadRoom.txt");
+				fout.println(e);
+				fout.close();
+			} catch (FileNotFoundException e1) {
+				System.out.println("Cannot create file for writing exception");
+			}
 			throw e;
 		}
 	}
@@ -121,7 +135,7 @@ public class Board {
 			}
 			catch (Exception e)
 			{	
-				throw new BadConfigFormatException("Empty layout file.");}
+				throw e;}
 			while (in.hasNext())
 			{
 				numRows++;
@@ -152,6 +166,13 @@ public class Board {
 			catch (FileNotFoundException e) {
 				throw e;}
 			catch (BadConfigFormatException e){
+				try {
+					PrintWriter fout = new PrintWriter("LogFileLoadBoard.txt");
+					fout.println(e);
+					fout.close();
+				} catch (FileNotFoundException e1) {
+					System.out.println("Cannot create file for writing exception");
+				}
 				throw e;}
 	}
 	public BoardCell getCellAt(int row, int column) {
