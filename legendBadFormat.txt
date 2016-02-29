@@ -1,0 +1,11 @@
+K, Kitchen, C
+S, Studio, Card
+O, Office, Card
+B, Bedroom, Card
+D, Dining Room, Card
+L, Lounge, Card
+G, Garage, Card
+A, Attic, Card
+C, Cellar, Card
+W, Walkway, Other
+X, Closet, Other

@@ -157,7 +157,12 @@ public class Board {
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
 	}
-	
+	public void calcTargets(int row, int col , int pathLength) {
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		visited.add(board[row][col]);
+		findAllTargets(board[row][col], pathLength);
+	}
 	public void calcAdjacencies() {
 
 
@@ -187,12 +192,7 @@ public class Board {
 		visited.remove(cell);
 	}
 }
-	public void calcTargets(BoardCell startCell, int pathLength) {
-	visited = new HashSet<BoardCell>();
-	targets = new HashSet<BoardCell>();
-	visited.add(startCell);
-	findAllTargets(startCell, pathLength);
-}
+
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
