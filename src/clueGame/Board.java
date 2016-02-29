@@ -30,6 +30,7 @@ public class Board {
 		boardConfigFile = "ClueLayout.csv";
 		roomConfigFile = "ClueLegend.txt";
 		rooms = new HashMap<Character,String>();
+		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
 	public Board(String boardConfigFile, String roomConfigFile) {
 		super();
@@ -37,6 +38,7 @@ public class Board {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
 		rooms = new HashMap<Character,String>();
+		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
 	public int getNumDoors() {
 		return numDoors;
@@ -185,8 +187,6 @@ public class Board {
 		findAllTargets(board[row][col], pathLength);
 	}
 	public void calcAdjacencies() {
-
-
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			LinkedList<BoardCell> holder = new LinkedList<BoardCell>();
@@ -200,7 +200,8 @@ public class Board {
 }
 	private void findAllTargets(BoardCell thisCell, int numStep)
 {
-	LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
+	//LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
+	LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>();
 	for(BoardCell cell: adjacentCells)
 	{
 		if(visited.contains(cell)) continue;
@@ -218,6 +219,7 @@ public class Board {
 		return targets;
 	}
 	public LinkedList<BoardCell> getAdjList(int row, int col) {
-		return adjMatrix.get(board[row][col]);
+		//return adjMatrix.get(board[row][col]);
+		return new LinkedList<BoardCell>();
 	}
 }
