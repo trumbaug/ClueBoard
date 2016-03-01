@@ -179,10 +179,10 @@ public class AdjTargetTests {
 	
 	@Test
 	public void testTargetsFourSteps() {
-		board.calcTargets(0, 4, 4);
+		board.calcTargets(0, 3, 4);
 		Set<BoardCell> targets= board.getTargets();
 		assertEquals(1, targets.size());
-		assertTrue(targets.contains(board.getCellAt(4, 8)));
+		assertTrue(targets.contains(board.getCellAt(4, 3)));
 		
 		board.calcTargets(1, 8, 4);
 		targets= board.getTargets();
@@ -219,7 +219,7 @@ public class AdjTargetTests {
 	@Test
 	public void testTargetsIntoRoomShortcut() 
 	{
-		board.calcTargets(3, 12, 2);
+		board.calcTargets(3, 13, 2);
 		Set<BoardCell> targets= board.getTargets();
 		assertEquals(3, targets.size());
 		assertTrue(targets.contains(board.getCellAt(1, 13)));

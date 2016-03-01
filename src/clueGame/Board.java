@@ -56,6 +56,7 @@ public class Board {
 		try{
 			loadRoomConfig();
 			loadBoardConfig();
+			calcAdjacencies();
 		}
 		catch (BadConfigFormatException e)
 		{
@@ -79,7 +80,7 @@ public class Board {
 			Scanner in = new Scanner(reader);
 			String dummy;
 			String[] ar;
-			
+
 			while (in.hasNext())
 			{
 				dummy = in.nextLine();
@@ -155,27 +156,28 @@ public class Board {
 					}
 					if (ar[i].length() == 1)
 					{
-						board[numRows][i] = new BoardCell(0,i,ar[i].charAt(0),DoorDirection.NONE);
+						board[numRows][i] = new BoardCell(numRows,i,ar[i].charAt(0),DoorDirection.NONE);
 					}
 					else
 					{
-						board[numRows][i] = new BoardCell(0,i,ar[i].charAt(0),ar[i].charAt(1));
+						board[numRows][i] = new BoardCell(numRows,i,ar[i].charAt(0),ar[i].charAt(1));
 					}
 				}	
-			 }
-			 numRows++;
 			}
-			catch (FileNotFoundException e) {
-				throw e;}
-			catch (BadConfigFormatException e){
-				try {
-					PrintWriter fout = new PrintWriter("LogFileLoadBoard.txt");
-					fout.println(e);
-					fout.close();
-				} catch (FileNotFoundException e1) {
-					System.out.println("Cannot create file for writing exception");
-				}
-				throw e;}
+			numRows++;
+
+		}
+		catch (FileNotFoundException e) {
+			throw e;}
+		catch (BadConfigFormatException e){
+			try {
+				PrintWriter fout = new PrintWriter("LogFileLoadBoard.txt");
+				fout.println(e);
+				fout.close();
+			} catch (FileNotFoundException e1) {
+				System.out.println("Cannot create file for writing exception");
+			}
+			throw e;}
 	}
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
@@ -187,39 +189,65 @@ public class Board {
 		findAllTargets(board[row][col], pathLength);
 	}
 	public void calcAdjacencies() {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			LinkedList<BoardCell> holder = new LinkedList<BoardCell>();
-			if(i != 0) holder.add(board[i-1][j]);
-			if(j != 0) holder.add(board[i][j-1]);
-			if(i != 3) holder.add(board[i+1][j]);
-			if(j != 3) holder.add(board[i][j+1]);
-			adjMatrix.put(board[i][j], holder);
+		Set<Character> checker = rooms.keySet();
+		checker.remove('W');
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				LinkedList<BoardCell> holder = new LinkedList<BoardCell>();
+				if (checker.contains(board[i][j].getInitial()))
+				{
+					if(board[i][j].getDoorDirection() != DoorDirection.NONE)
+					{
+						switch (board[i][j].getDoorDirection()){
+						case UP: holder.add(board[i-1][j]);
+						break;
+						case DOWN: holder.add(board[i+1][j]);
+						break;
+						case RIGHT: holder.add(board[i][j+1]);
+						break;
+						case LEFT: holder.add(board[i][j-1]);
+						break;
+						}}
+					adjMatrix.put(board[i][j], holder);
+					continue;
+				}
+				if(i != 0 && !(checker.contains(board[i-1][j].getInitial()) && 
+						board[i-1][j].getDoorDirection() != DoorDirection.DOWN))
+					holder.add(board[i-1][j]);
+				if(j != 0 && !(checker.contains(board[i][j-1].getInitial())
+						&& board[i][j-1].getDoorDirection() != DoorDirection.RIGHT))
+					holder.add(board[i][j-1]);
+				if(i != numRows - 1 && !(checker.contains(board[i+1][j].getInitial()) 
+						&& board[i+1][j].getDoorDirection() != DoorDirection.UP))
+					holder.add(board[i+1][j]);
+				if(j != numColumns - 1 && !(checker.contains(board[i][j+1].getInitial())
+						&& board[i][j+1].getDoorDirection() != DoorDirection.LEFT))
+					holder.add(board[i][j+1]);
+				adjMatrix.put(board[i][j], holder);
+			}
 		}
 	}
-}
 	private void findAllTargets(BoardCell thisCell, int numStep)
-{
-	//LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
-	LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>();
-	for(BoardCell cell: adjacentCells)
 	{
-		if(visited.contains(cell)) continue;
-		visited.add(cell);
-		if(numStep == 1) targets.add(cell);
-		else
+		LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
+		for(BoardCell cell: adjacentCells)
 		{
-			findAllTargets(cell, numStep - 1);
+			if(visited.contains(cell)) continue;
+			visited.add(cell);
+			if(numStep == 1 || cell.getDoorDirection() != DoorDirection.NONE)
+				targets.add(cell);
+			else
+			{
+				findAllTargets(cell, numStep - 1);
+			}
+			visited.remove(cell);
 		}
-		visited.remove(cell);
 	}
-}
 
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
 	public LinkedList<BoardCell> getAdjList(int row, int col) {
-		//return adjMatrix.get(board[row][col]);
-		return new LinkedList<BoardCell>();
+		return adjMatrix.get(board[row][col]);
 	}
 }

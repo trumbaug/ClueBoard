@@ -55,4 +55,9 @@ public class BoardCell {
 			return true;
 		return false;
 	}
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", column=" + column + ", initial=" + initial + ", doorDir=" + doorDir + "]";
+	}
+	
 }
