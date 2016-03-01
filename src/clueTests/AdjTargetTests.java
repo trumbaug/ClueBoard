@@ -16,6 +16,8 @@ public class AdjTargetTests {
 		board = new Board("layout.txt", "legend.txt");
 		board.initialize();
 	}
+	
+	//Adjacency tests for tiles that are in a room and are not a doorway, total tests = 4;
 	@Test
 	public void testAdjacenciesInsideRooms()
 	{
@@ -32,6 +34,8 @@ public class AdjTargetTests {
 		testList = board.getAdjList(0, 20);
 		assertEquals(0, testList.size());
 	}
+	
+	//Adjacency tests for tiles that are doorways, total tests = 4;
 	@Test
 	public void testAdjacencyRoomExit()
 	{
@@ -50,6 +54,7 @@ public class AdjTargetTests {
 		
 	}
 	
+	//Adjacency tests for next-to-doorway tiles, total tests = 4;
 	@Test
 	public void testAdjacencyDoorways()
 	{
@@ -79,6 +84,7 @@ public class AdjTargetTests {
 		assertEquals(4, testList.size());
 	}
 
+	//Adjacency tests that are on the edge of the board, total tests = 4;
 	@Test
 	public void testAdjacencyEdge()
 	{
@@ -100,20 +106,13 @@ public class AdjTargetTests {
 		assertTrue(testList.contains(board.getCellAt(8, 19)));
 		assertEquals(1, testList.size());
 	}
+	
+	//Adjacency tests for various walkway tiles (i.e. all surrounding tiles are walkways, walkway tiles besides room tiles etc.), total tests = 5
+	//These satisfy the first and third required adjacency tests for Part 2
 	@Test
 	public void testAdjacencyWalkways()
-	{
-		LinkedList<BoardCell> testList = board.getAdjList(0, 3);
-		assertTrue(testList.contains(board.getCellAt(1, 3)));
-		assertEquals(1, testList.size());
-	
-		testList = board.getAdjList(6, 3);
-		assertTrue(testList.contains(board.getCellAt(6, 4)));
-		assertTrue(testList.contains(board.getCellAt(5, 3)));
-		assertTrue(testList.contains(board.getCellAt(7, 3)));
-		assertEquals(3, testList.size());
-
-		testList = board.getAdjList(8, 18);
+	{	
+		LinkedList<BoardCell> testList = board.getAdjList(8, 18);
 		assertTrue(testList.contains(board.getCellAt(8, 17)));
 		assertTrue(testList.contains(board.getCellAt(8, 19)));
 		assertEquals(2, testList.size());
@@ -142,6 +141,8 @@ public class AdjTargetTests {
 		
 	}
 	
+	
+	//Target tests strictly along walkways (with varying steps), total tests = 4
 	@Test
 	public void testTargetsOneStep() {
 		board.calcTargets(19, 7, 1);
@@ -179,13 +180,8 @@ public class AdjTargetTests {
 	
 	@Test
 	public void testTargetsFourSteps() {
-		board.calcTargets(0, 4, 4);
-		Set<BoardCell> targets= board.getTargets();
-		assertEquals(1, targets.size());
-		assertTrue(targets.contains(board.getCellAt(4, 8)));
-		
 		board.calcTargets(1, 8, 4);
-		targets= board.getTargets();
+		Set<BoardCell> targets= board.getTargets();
 		assertEquals(1, targets.size());
 		assertTrue(targets.contains(board.getCellAt(5, 8)));	
 	}	
@@ -200,7 +196,7 @@ public class AdjTargetTests {
 		assertTrue(targets.contains(board.getCellAt(20, 15)));		
 	}	
 	
-
+	//Target tests that allow user to enter a room, total tests = 2
 	@Test 
 	public void testTargetsIntoRoom()
 	{
@@ -219,7 +215,7 @@ public class AdjTargetTests {
 	@Test
 	public void testTargetsIntoRoomShortcut() 
 	{
-		board.calcTargets(3, 12, 2);
+		board.calcTargets(3, 13, 2);
 		Set<BoardCell> targets= board.getTargets();
 		assertEquals(3, targets.size());
 		assertTrue(targets.contains(board.getCellAt(1, 13)));
@@ -227,6 +223,7 @@ public class AdjTargetTests {
 		assertTrue(targets.contains(board.getCellAt(3, 12)));	
 	}
 
+	//Target tests when leaving a room, total tests = 2
 	@Test
 	public void testRoomExit()
 	{
@@ -234,11 +231,12 @@ public class AdjTargetTests {
 		Set<BoardCell> targets= board.getTargets();
 		assertEquals(1, targets.size());
 		assertTrue(targets.contains(board.getCellAt(8, 17)));
-		board.calcTargets(7, 17, 2);
+		board.calcTargets(18, 1, 2);
 		targets= board.getTargets();
-		assertEquals(2, targets.size());
-		assertTrue(targets.contains(board.getCellAt(8, 16)));
-		assertTrue(targets.contains(board.getCellAt(8, 18)));
+		assertEquals(3, targets.size());
+		assertTrue(targets.contains(board.getCellAt(17, 0)));
+		assertTrue(targets.contains(board.getCellAt(17, 2)));
+		assertTrue(targets.contains(board.getCellAt(16, 1)));		
 	}
 
 }
