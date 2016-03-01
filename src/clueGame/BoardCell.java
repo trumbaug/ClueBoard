@@ -1,7 +1,5 @@
 package clueGame;
 
-import com.sun.javafx.scene.traversal.Direction;
-
 public class BoardCell {
 	private int row;
 	private int column;
@@ -43,11 +41,14 @@ public class BoardCell {
 	}
 
 	public boolean isWalkway() {
-		return true;
+		return getInitial() == 'W';
 	}
 	
 	public boolean isRoom() {
-		return true;
+		if (getInitial() != 'W' && getInitial() != 'X') {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isDoorway() {
