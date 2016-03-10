@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import CluePlayers.Player;
 import Experiment.BoardCellEx;
 
 public class Board {
@@ -23,20 +24,26 @@ public class Board {
 	private Set<BoardCell> targets;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String weaponsConfigFile;
+	private String playersConfigFile;
 	private Set<BoardCell> visited;	
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 		boardConfigFile = "ClueLayout.csv";
 		roomConfigFile = "ClueLegend.txt";
+		weaponsConfigFile = "Weapons.txt";
+		playersConfigFile = "People.txt";
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
-	public Board(String boardConfigFile, String roomConfigFile) {
+	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
+		this.playersConfigFile = playerConfigFile;
+		this.weaponsConfigFile = weaponsConfigFile;
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
@@ -249,5 +256,27 @@ public class Board {
 	}
 	public LinkedList<BoardCell> getAdjList(int row, int col) {
 		return adjMatrix.get(board[row][col]);
+	}
+	
+	public void loadConfigFiles() throws FileNotFoundException{
+		String dummy;
+		String ar[];
+		FileReader readerplayer = null;
+		readerplayer = new FileReader(playersConfigFile);
+		Scanner inplayer = new Scanner(readerplayer);
+		
+		FileReader readerweapons = null;
+		readerweapons = new FileReader(playersConfigFile);
+		Scanner inweapons = new Scanner(readerplayer);
+		
+		while(inplayer.hasNext()){
+			Player thePlayer = new Player();
+			dummy = inplayer.nextLine();
+			ar = dummy.split(",");
+			thePlayer.setName(ar[0]);
+			thePlayer.setColor(ar[1]);
+			thePlayer.setRow(Integer.parseInt(ar[2]));
+			thePlayer.setColumn(Integer.parseInt(ar[3]));
+		}
 	}
 }
