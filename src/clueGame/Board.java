@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import CluePlayers.Card;
 import CluePlayers.Player;
+import CluePlayers.Solution;
 import Experiment.BoardCellEx;
 
 public class Board {
@@ -26,7 +28,9 @@ public class Board {
 	private String roomConfigFile;
 	private String weaponsConfigFile;
 	private String playersConfigFile;
-	private Set<BoardCell> visited;	
+	private Set<BoardCell> visited;
+	private Solution theAnswer;
+	
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -37,6 +41,7 @@ public class Board {
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
+	
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -47,18 +52,23 @@ public class Board {
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 	}
+	
 	public int getNumDoors() {
 		return numDoors;
 	}
+	
 	public int getNumRows() {
 		return numRows;
 	}
+	
 	public int getNumColumns() {
 		return numColumns;
 	}
+	
 	public static Map<Character, String> getRooms() {
 		return rooms;
 	}
+	
 	public void initialize() {
 		try{
 			loadRoomConfig();
@@ -80,6 +90,7 @@ public class Board {
 			e.getMessage();
 		}
 	}
+	
 	public void loadRoomConfig()  throws FileNotFoundException, BadConfigFormatException{
 		FileReader reader = null;
 		try{
@@ -114,6 +125,7 @@ public class Board {
 			throw e;
 		}
 	}
+	
 	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException{
 		FileReader reader = null;
 		try {
@@ -186,15 +198,18 @@ public class Board {
 			}
 			throw e;}
 	}
+	
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
 	}
+	
 	public void calcTargets(int row, int col , int pathLength) {
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		visited.add(board[row][col]);
 		findAllTargets(board[row][col], pathLength);
 	}
+	
 	public void calcAdjacencies() {
 		Set<Character> checker = rooms.keySet();
 		checker.remove('W');
@@ -234,6 +249,7 @@ public class Board {
 			}
 		}
 	}
+	
 	private void findAllTargets(BoardCell thisCell, int numStep)
 	{
 		LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
@@ -254,6 +270,7 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
+	
 	public LinkedList<BoardCell> getAdjList(int row, int col) {
 		return adjMatrix.get(board[row][col]);
 	}
@@ -279,4 +296,19 @@ public class Board {
 			thePlayer.setColumn(Integer.parseInt(ar[3]));
 		}
 	}
+
+	public void selectAnswer(){
+		theAnswer = new Solution();
+	}
+	
+	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
+		Card card = new Card();
+		return card;
+	}
+	
+	public boolean checkAccusation(Solution accusation){
+		return false;
+	}
+	
 }
+	
