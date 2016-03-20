@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import CluePlayers.Card;
+import CluePlayers.Card.CardType;
 import CluePlayers.Player;
 import CluePlayers.Solution;
 import Experiment.BoardCellEx;
@@ -30,16 +31,21 @@ public class Board {
 	private String playersConfigFile;
 	private Set<BoardCell> visited;
 	private Solution theAnswer;
+	private LinkedList<Card> deck;
+	private LinkedList<Card> suspectCards;
+	private LinkedList<Card> weaponCards;
+	private LinkedList<Card> roomCards;
 	
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 		boardConfigFile = "ClueLayout.csv";
 		roomConfigFile = "ClueLegend.txt";
-		weaponsConfigFile = "Weapons.txt";
-		playersConfigFile = "People.txt";
+		weaponsConfigFile = "weapons.txt";
+		playersConfigFile = "people.csv";
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
+		deck = new LinkedList<Card>();
 	}
 	
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
@@ -51,22 +57,7 @@ public class Board {
 		this.weaponsConfigFile = weaponsConfigFile;
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
-	}
-	
-	public int getNumDoors() {
-		return numDoors;
-	}
-	
-	public int getNumRows() {
-		return numRows;
-	}
-	
-	public int getNumColumns() {
-		return numColumns;
-	}
-	
-	public static Map<Character, String> getRooms() {
-		return rooms;
+		deck = new LinkedList<Card>();
 	}
 	
 	public void initialize() {
@@ -199,8 +190,26 @@ public class Board {
 			throw e;}
 	}
 	
-	public BoardCell getCellAt(int row, int column) {
-		return board[row][column];
+	public void loadConfigFiles() throws FileNotFoundException{
+		String dummy;
+		String ar[];
+		FileReader readerplayer = null;
+		readerplayer = new FileReader(playersConfigFile);
+		Scanner inplayer = new Scanner(readerplayer);
+		
+		FileReader readerweapons = null;
+		readerweapons = new FileReader(playersConfigFile);
+		Scanner inweapons = new Scanner(readerplayer);
+		
+		while(inplayer.hasNext()){
+			Player thePlayer = new Player();
+			dummy = inplayer.nextLine();
+			ar = dummy.split(",");
+			thePlayer.setName(ar[0]);
+			thePlayer.setColor(ar[1]);
+			thePlayer.setRow(Integer.parseInt(ar[2]));
+			thePlayer.setColumn(Integer.parseInt(ar[3]));
+		}
 	}
 	
 	public void calcTargets(int row, int col , int pathLength) {
@@ -267,36 +276,12 @@ public class Board {
 		}
 	}
 
-	public Set<BoardCell> getTargets() {
-		return targets;
+	public void createDeck(){
+		roomCards = new LinkedList<Card>();
+		weaponCards = new LinkedList<Card>();
+		suspectCards = new LinkedList<Card>();
 	}
 	
-	public LinkedList<BoardCell> getAdjList(int row, int col) {
-		return adjMatrix.get(board[row][col]);
-	}
-	
-	public void loadConfigFiles() throws FileNotFoundException{
-		String dummy;
-		String ar[];
-		FileReader readerplayer = null;
-		readerplayer = new FileReader(playersConfigFile);
-		Scanner inplayer = new Scanner(readerplayer);
-		
-		FileReader readerweapons = null;
-		readerweapons = new FileReader(playersConfigFile);
-		Scanner inweapons = new Scanner(readerplayer);
-		
-		while(inplayer.hasNext()){
-			Player thePlayer = new Player();
-			dummy = inplayer.nextLine();
-			ar = dummy.split(",");
-			thePlayer.setName(ar[0]);
-			thePlayer.setColor(ar[1]);
-			thePlayer.setRow(Integer.parseInt(ar[2]));
-			thePlayer.setColumn(Integer.parseInt(ar[3]));
-		}
-	}
-
 	public void selectAnswer(){
 		theAnswer = new Solution();
 	}
@@ -310,5 +295,32 @@ public class Board {
 		return false;
 	}
 	
+	public BoardCell getCellAt(int row, int column) {
+		return board[row][column];
+	}
+	
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+	
+	public LinkedList<BoardCell> getAdjList(int row, int col) {
+		return adjMatrix.get(board[row][col]);
+	}
+	
+	public int getNumDoors() {
+		return numDoors;
+	}
+	
+	public int getNumRows() {
+		return numRows;
+	}
+	
+	public int getNumColumns() {
+		return numColumns;
+	}
+	
+	public static Map<Character, String> getRooms() {
+		return rooms;
+	}
 }
 	

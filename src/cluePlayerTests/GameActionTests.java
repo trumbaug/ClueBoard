@@ -17,8 +17,25 @@ public class GameActionTests {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void accusationTest() {
+		
+	}
+	
+	@Test 
+	public void targetLocationTest(){
+		
+	}
+	
+	@Test
+	public void disproveSuggestionTest(){
+		//Test for one player, one correct match
+		//Test for one player, multiple possible matches
+		//Test that all players queried
+	}
+	
+	@Test
+	public void computerPlayerSuggestionTest(){
+		
 	}
 
 }
