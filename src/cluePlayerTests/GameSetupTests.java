@@ -52,11 +52,18 @@ public class GameSetupTests {
 		assertEquals(7, computerPlayers.peekLast().getRow());
 	}
 	
-	/*@Test
+	@Test
 	public void deckTest(){
+		LinkedList<Card> deck = new LinkedList<Card>();
+		deck = board.getDeck();
+		assertEquals(23, board.getDeck().size());
+		assertEquals(6, board.countPersonCards(deck));
+		assertEquals(6, board.countWeaponCards(deck));
+		assertEquals(11, board.countRoomCards(deck));
 		
 	}
 	
+	/*
 	@Test
 	public void dealTest(){
 		

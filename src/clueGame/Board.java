@@ -325,7 +325,37 @@ public class Board {
 		deck.addAll(weaponCards);
 		deck.addAll(roomCards);
 	}
-
+	
+	public int countPersonCards(LinkedList<Card> deck){
+		int counter = 0;
+		for(Card c: deck){
+			if (c.getCardType() == Card.CardType.PERSON){
+				counter++;
+			}
+		}
+		return counter; 
+	}
+	
+	public int countWeaponCards(LinkedList<Card> deck){
+		int counter = 0;
+		for(Card c: deck){
+			if (c.getCardType() == Card.CardType.WEAPON){
+				counter++;
+			}
+		}
+		return counter; 
+	}
+	
+	public int countRoomCards(LinkedList<Card> deck){
+		int counter = 0;
+		for(Card c: deck){
+			if (c.getCardType() == Card.CardType.ROOM){
+				counter++;
+			}
+		}
+		return counter; 
+	}
+	
 	public void selectAnswer(){
 		theAnswer = new Solution();
 	}

@@ -18,4 +18,8 @@ public class Card {
 	public boolean equals(){
 		return false;
 	}
+	
+	public CardType getCardType(){
+		return cardType;
+	}
 }
