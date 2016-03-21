@@ -28,6 +28,7 @@ public class GameSetupTests {
 	public void humanPlayerTest() {
 		HumanPlayer human = new HumanPlayer();
 		human = board.getHumanPlayer();
+		System.out.println(human.getName());
 		//check correct loading of human player for name, color, starting location
 		assertEquals("Miss Scarlett", human.getName());
 		assertEquals(Color.red, human.getColor());

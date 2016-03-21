@@ -206,33 +206,45 @@ public class Board {
 		String ar[];
 		allPlayers = new LinkedList<Player>();
 		computerPlayers = new LinkedList<ComputerPlayer>();
+		humanPlayer = new HumanPlayer();
 		suspectCards = new LinkedList<Card>();
 		weaponCards = new LinkedList<Card>();
-
+		
 		FileReader readerPlayer = null;
 		readerPlayer = new FileReader(playersConfigFile);
 		Scanner inPlayer = new Scanner(readerPlayer);
 		FileReader readerWeapon = null;
 		readerWeapon = new FileReader(weaponsConfigFile);
 		Scanner inWeapon = new Scanner(readerWeapon);
-
+		int counter = 0;
 		try{
 			while(inPlayer.hasNext()){
-				Player thePlayer = null;
 				dummy = inPlayer.nextLine();
 				ar = dummy.split(",");
-				thePlayer = new Player(Integer.parseInt(ar[3]), Integer.parseInt(ar[2]), ar[0], thePlayer.convertColor(ar[1]));
+				Player thePlayer = new Player();
+				thePlayer.setName(ar[0]);
+				System.out.println(thePlayer.getName());
+				thePlayer.setColor(ar[1]);
+				System.out.println(ar[1]);
+				thePlayer.setColumn(Integer.parseInt(ar[3]));
+				System.out.println("in");
+				thePlayer.setRow(Integer.parseInt(ar[2]));
 				allPlayers.add(thePlayer);
 				Card suspect = new Card(ar[0], CardType.PERSON);
 				suspectCards.add(suspect);
+				counter++;
+				
 			}
 		}catch (NumberFormatException e){
 			e.getMessage();
 		}
-		
-		for(Player c : allPlayers){
+		System.out.println(counter);
+		for( Player c: allPlayers ){
+			System.out.println(c.getName());
 			if(c.getName().equals("Miss Scarlett")){
-				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				//humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				//humanPlayer.setName(c.getName());
+				
 			}
 			else{
 				ComputerPlayer cp = new ComputerPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
