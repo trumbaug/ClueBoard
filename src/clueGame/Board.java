@@ -35,6 +35,7 @@ public class Board {
 	private LinkedList<Card> suspectCards;
 	private LinkedList<Card> weaponCards;
 	private LinkedList<Card> roomCards;
+	private LinkedList<Player> players;
 	
 	public Board()  {
 		super();
@@ -64,7 +65,9 @@ public class Board {
 		try{
 			loadRoomConfig();
 			loadBoardConfig();
+			loadConfigFiles();
 			calcAdjacencies();
+			createDeck();
 		}
 		catch (BadConfigFormatException e)
 		{
@@ -84,6 +87,8 @@ public class Board {
 	
 	public void loadRoomConfig()  throws FileNotFoundException, BadConfigFormatException{
 		FileReader reader = null;
+		roomCards = new LinkedList<Card>();
+		
 		try{
 			reader = new FileReader(roomConfigFile);
 			Scanner in = new Scanner(reader);
@@ -99,6 +104,8 @@ public class Board {
 					throw new BadConfigFormatException("Bad legend file.");
 				}
 				rooms.put(ar[0].charAt(0), ar[1]);
+				Card room = new Card(ar[1], CardType.ROOM);
+				roomCards.add(room);
 			}}
 		catch (FileNotFoundException e)
 		{
@@ -193,23 +200,35 @@ public class Board {
 	public void loadConfigFiles() throws FileNotFoundException{
 		String dummy;
 		String ar[];
-		FileReader readerplayer = null;
-		readerplayer = new FileReader(playersConfigFile);
-		Scanner inplayer = new Scanner(readerplayer);
+		players = new LinkedList<Player>();
+		suspectCards = new LinkedList<Card>();
+		weaponCards = new LinkedList<Card>();
 		
-		FileReader readerweapons = null;
-		readerweapons = new FileReader(playersConfigFile);
-		Scanner inweapons = new Scanner(readerplayer);
+		FileReader readerPlayer;
+		readerPlayer = new FileReader(playersConfigFile);
+		Scanner inPlayer = new Scanner(readerPlayer);
+		FileReader readerWeapon;
+		readerWeapon = new FileReader(weaponsConfigFile);
+		Scanner inWeapon = new Scanner(readerWeapon);
 		
-		while(inplayer.hasNext()){
-			Player thePlayer = new Player();
-			dummy = inplayer.nextLine();
+		
+		while(inPlayer.hasNext()){
+			Player thePlayer = null;
+			dummy = inPlayer.nextLine();
 			ar = dummy.split(",");
-			thePlayer.setName(ar[0]);
-			thePlayer.setColor(ar[1]);
-			thePlayer.setRow(Integer.parseInt(ar[2]));
-			thePlayer.setColumn(Integer.parseInt(ar[3]));
+			thePlayer = new Player(Integer.parseInt(ar[3]), Integer.parseInt(ar[2]), ar[0], thePlayer.convertColor(ar[1]));
+			players.add(thePlayer);
+			Card suspect = new Card(ar[0], CardType.PERSON);
+			suspectCards.add(suspect);
 		}
+		
+		while(inWeapon.hasNext()){
+			String cardName;
+			cardName = inWeapon.nextLine();
+			Card weapon = new Card(cardName, CardType.WEAPON);
+			weaponCards.add(weapon);
+		}
+
 	}
 	
 	public void calcTargets(int row, int col , int pathLength) {
@@ -277,9 +296,10 @@ public class Board {
 	}
 
 	public void createDeck(){
-		roomCards = new LinkedList<Card>();
-		weaponCards = new LinkedList<Card>();
-		suspectCards = new LinkedList<Card>();
+		deck = new LinkedList<Card>();
+		deck.addAll(suspectCards);
+		deck.addAll(weaponCards);
+		deck.addAll(roomCards);
 	}
 	
 	public void selectAnswer(){
