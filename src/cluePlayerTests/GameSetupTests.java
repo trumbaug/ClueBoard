@@ -32,8 +32,8 @@ public class GameSetupTests {
 		//check correct loading of human player for name, color, starting location
 		assertEquals("Miss Scarlett", human.getName());
 		assertEquals(Color.red, human.getColor());
-		assertEquals(10, human.getColumn());
-		assertEquals(17, human.getRow());
+		assertEquals(17, human.getColumn());
+		assertEquals(10, human.getRow());
 	}
 	
 	@Test

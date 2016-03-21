@@ -34,6 +34,7 @@ public class Player {
 	}
 
 	public void setColumn(int column) {
+		System.out.println(column);
 		this.column = column;
 	}
 

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.lang.*;
 
 import CluePlayers.Card;
 import CluePlayers.Card.CardType;
@@ -216,34 +217,27 @@ public class Board {
 		FileReader readerWeapon = null;
 		readerWeapon = new FileReader(weaponsConfigFile);
 		Scanner inWeapon = new Scanner(readerWeapon);
-		int counter = 0;
 		try{
 			while(inPlayer.hasNext()){
 				dummy = inPlayer.nextLine();
 				ar = dummy.split(",");
 				Player thePlayer = new Player();
 				thePlayer.setName(ar[0]);
-				System.out.println(thePlayer.getName());
-				thePlayer.setColor(ar[1]);
-				System.out.println(ar[1]);
+				thePlayer.setColor(ar[1]);			
 				thePlayer.setColumn(Integer.parseInt(ar[3]));
-				System.out.println("in");
 				thePlayer.setRow(Integer.parseInt(ar[2]));
 				allPlayers.add(thePlayer);
 				Card suspect = new Card(ar[0], CardType.PERSON);
 				suspectCards.add(suspect);
-				counter++;
 				
 			}
 		}catch (NumberFormatException e){
 			e.getMessage();
 		}
-		System.out.println(counter);
 		for( Player c: allPlayers ){
-			System.out.println(c.getName());
 			if(c.getName().equals("Miss Scarlett")){
-				//humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
-				//humanPlayer.setName(c.getName());
+				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				humanPlayer.setName(c.getName());
 				
 			}
 			else{
