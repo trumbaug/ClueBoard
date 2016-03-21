@@ -20,6 +20,7 @@ public class GameSetupTests {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		board = new Board();
+		board.initialize();
 	}
 
 	//Tests for loading players from file correctly 
@@ -28,10 +29,10 @@ public class GameSetupTests {
 		HumanPlayer human = new HumanPlayer();
 		human = board.getHumanPlayer();
 		//check correct loading of human player for name, color, starting location
-		assertEquals(human.getName(), "Miss Scarlett");
-		assertEquals(human.getColor(), Color.red);
-		assertEquals(human.getColumn(), 10);
-		assertEquals(human.getRow(), 17);
+		assertEquals("Miss Scarlett", human.getName());
+		assertEquals(Color.red, human.getColor());
+		assertEquals(10, human.getColumn());
+		assertEquals(17, human.getRow());
 	}
 	
 	@Test
@@ -39,18 +40,18 @@ public class GameSetupTests {
 		LinkedList<ComputerPlayer> computerPlayers = new LinkedList <ComputerPlayer>();
 		computerPlayers = board.getComputerPlayers();
 		//check correct loading of first computer players
-		assertEquals(computerPlayers.peekFirst().getName(), "Mrs. Peacock");
-		assertEquals(computerPlayers.peekFirst().getColor(), Color.magenta);
-		assertEquals(computerPlayers.peekFirst().getColumn(), 8);
-		assertEquals(computerPlayers.peekFirst().getRow(), 3);
+		assertEquals("Mrs. Peacock", computerPlayers.peekFirst().getName());
+		assertEquals(Color.magenta,computerPlayers.peekFirst().getColor());
+		assertEquals(8, computerPlayers.peekFirst().getColumn());
+		assertEquals(3, computerPlayers.peekFirst().getRow());
 		//check correct loading of last computer players
-		assertEquals(computerPlayers.peekLast().getName(), "Mrs. White");
-		assertEquals(computerPlayers.peekLast().getColor(), Color.white);
-		assertEquals(computerPlayers.peekLast().getColumn(), 15);
-		assertEquals(computerPlayers.peekLast().getRow(), 7);
+		assertEquals("Mrs. White", computerPlayers.peekLast().getName());
+		assertEquals(Color.white, computerPlayers.peekLast().getColor());
+		assertEquals(15, computerPlayers.peekLast().getColumn());
+		assertEquals(7, computerPlayers.peekLast().getRow());
 	}
 	
-	@Test
+	/*@Test
 	public void deckTest(){
 		
 	}
@@ -58,6 +59,6 @@ public class GameSetupTests {
 	@Test
 	public void dealTest(){
 		
-	}
+	}*/
 
 }

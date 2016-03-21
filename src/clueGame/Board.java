@@ -40,7 +40,7 @@ public class Board {
 	private LinkedList<Player> allPlayers;
 	private LinkedList<ComputerPlayer> computerPlayers;
 	private HumanPlayer humanPlayer;
-	
+
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -52,7 +52,7 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-	
+
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -64,7 +64,7 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-	
+
 	public void initialize() {
 		try{
 			loadRoomConfig();
@@ -88,11 +88,11 @@ public class Board {
 			e.getMessage();
 		}
 	}
-	
+
 	public void loadRoomConfig()  throws FileNotFoundException, BadConfigFormatException{
 		FileReader reader = null;
 		roomCards = new LinkedList<Card>();
-		
+
 		try{
 			reader = new FileReader(roomConfigFile);
 			Scanner in = new Scanner(reader);
@@ -127,7 +127,7 @@ public class Board {
 			throw e;
 		}
 	}
-	
+
 	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException{
 		FileReader reader = null;
 		try {
@@ -200,31 +200,34 @@ public class Board {
 			}
 			throw e;}
 	}
-	
-	public void loadConfigFiles() throws FileNotFoundException{
+
+	public void loadConfigFiles() throws FileNotFoundException {
 		String dummy;
 		String ar[];
 		allPlayers = new LinkedList<Player>();
 		computerPlayers = new LinkedList<ComputerPlayer>();
 		suspectCards = new LinkedList<Card>();
 		weaponCards = new LinkedList<Card>();
-		
-		FileReader readerPlayer;
+
+		FileReader readerPlayer = null;
 		readerPlayer = new FileReader(playersConfigFile);
 		Scanner inPlayer = new Scanner(readerPlayer);
-		FileReader readerWeapon;
+		FileReader readerWeapon = null;
 		readerWeapon = new FileReader(weaponsConfigFile);
 		Scanner inWeapon = new Scanner(readerWeapon);
-		
-		
-		while(inPlayer.hasNext()){
-			Player thePlayer = null;
-			dummy = inPlayer.nextLine();
-			ar = dummy.split(",");
-			thePlayer = new Player(Integer.parseInt(ar[3]), Integer.parseInt(ar[2]), ar[0], thePlayer.convertColor(ar[1]));
-			allPlayers.add(thePlayer);
-			Card suspect = new Card(ar[0], CardType.PERSON);
-			suspectCards.add(suspect);
+
+		try{
+			while(inPlayer.hasNext()){
+				Player thePlayer = null;
+				dummy = inPlayer.nextLine();
+				ar = dummy.split(",");
+				thePlayer = new Player(Integer.parseInt(ar[3]), Integer.parseInt(ar[2]), ar[0], thePlayer.convertColor(ar[1]));
+				allPlayers.add(thePlayer);
+				Card suspect = new Card(ar[0], CardType.PERSON);
+				suspectCards.add(suspect);
+			}
+		}catch (NumberFormatException e){
+			e.getMessage();
 		}
 		
 		for(Player c : allPlayers){
@@ -236,7 +239,7 @@ public class Board {
 				computerPlayers.add(cp);
 			}
 		}
-		
+
 		while(inWeapon.hasNext()){
 			String cardName;
 			cardName = inWeapon.nextLine();
@@ -245,14 +248,14 @@ public class Board {
 		}
 
 	}
-	
+
 	public void calcTargets(int row, int col , int pathLength) {
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		visited.add(board[row][col]);
 		findAllTargets(board[row][col], pathLength);
 	}
-	
+
 	public void calcAdjacencies() {
 		Set<Character> checker = rooms.keySet();
 		checker.remove('W');
@@ -292,7 +295,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	private void findAllTargets(BoardCell thisCell, int numStep)
 	{
 		LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
@@ -316,48 +319,48 @@ public class Board {
 		deck.addAll(weaponCards);
 		deck.addAll(roomCards);
 	}
-	
+
 	public void selectAnswer(){
 		theAnswer = new Solution();
 	}
-	
+
 	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked){
 		Card card = new Card();
 		return card;
 	}
-	
+
 	public boolean checkAccusation(Solution accusation){
 		return false;
 	}
-	
+
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
 	}
-	
+
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
+
 	public LinkedList<BoardCell> getAdjList(int row, int col) {
 		return adjMatrix.get(board[row][col]);
 	}
-	
+
 	public int getNumDoors() {
 		return numDoors;
 	}
-	
+
 	public int getNumRows() {
 		return numRows;
 	}
-	
+
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	public static Map<Character, String> getRooms() {
 		return rooms;
 	}
-	
+
 	public static LinkedList<Card> getDeck(){
 		return deck;
 	}
@@ -409,8 +412,8 @@ public class Board {
 	public void setComputerPlayers(LinkedList<ComputerPlayer> computerPlayers) {
 		this.computerPlayers = computerPlayers;
 	}
-	
-	
-	
+
+
+
 }
-	
+
