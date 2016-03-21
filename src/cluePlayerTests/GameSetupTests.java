@@ -56,11 +56,17 @@ public class GameSetupTests {
 	public void deckTest(){
 		LinkedList<Card> deck = new LinkedList<Card>();
 		deck = board.getDeck();
+		Card weaponCard = new Card("candlestick", Card.CardType.WEAPON);
+		Card personCard = new Card("Professor Plum", Card.CardType.PERSON);
+		Card roomCard = new Card("Office", Card.CardType.WEAPON);
+		
 		assertEquals(23, board.getDeck().size());
 		assertEquals(6, board.countPersonCards(deck));
 		assertEquals(6, board.countWeaponCards(deck));
 		assertEquals(11, board.countRoomCards(deck));
-		
+		assertTrue(deck.contains(roomCard));
+		assertTrue(deck.contains(personCard));
+		assertTrue(deck.contains(weaponCard));
 	}
 	
 	/*
