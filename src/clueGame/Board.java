@@ -13,6 +13,8 @@ import java.util.Set;
 import CluePlayers.Card;
 import CluePlayers.Card.CardType;
 import CluePlayers.Player;
+import CluePlayers.ComputerPlayer;
+import CluePlayers.HumanPlayer;
 import CluePlayers.Solution;
 import Experiment.BoardCellEx;
 
@@ -31,11 +33,13 @@ public class Board {
 	private String playersConfigFile;
 	private Set<BoardCell> visited;
 	private Solution theAnswer;
-	private LinkedList<Card> deck;
+	private static LinkedList<Card> deck;
 	private LinkedList<Card> suspectCards;
 	private LinkedList<Card> weaponCards;
 	private LinkedList<Card> roomCards;
-	private LinkedList<Player> players;
+	private LinkedList<Player> allPlayers;
+	private LinkedList<ComputerPlayer> computerPlayers;
+	private HumanPlayer humanPlayer;
 	
 	public Board()  {
 		super();
@@ -200,7 +204,8 @@ public class Board {
 	public void loadConfigFiles() throws FileNotFoundException{
 		String dummy;
 		String ar[];
-		players = new LinkedList<Player>();
+		allPlayers = new LinkedList<Player>();
+		computerPlayers = new LinkedList<ComputerPlayer>();
 		suspectCards = new LinkedList<Card>();
 		weaponCards = new LinkedList<Card>();
 		
@@ -217,9 +222,19 @@ public class Board {
 			dummy = inPlayer.nextLine();
 			ar = dummy.split(",");
 			thePlayer = new Player(Integer.parseInt(ar[3]), Integer.parseInt(ar[2]), ar[0], thePlayer.convertColor(ar[1]));
-			players.add(thePlayer);
+			allPlayers.add(thePlayer);
 			Card suspect = new Card(ar[0], CardType.PERSON);
 			suspectCards.add(suspect);
+		}
+		
+		for(Player c : allPlayers){
+			if(c.getName().equals("Miss Scarlett")){
+				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+			}
+			else{
+				ComputerPlayer cp = new ComputerPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				computerPlayers.add(cp);
+			}
 		}
 		
 		while(inWeapon.hasNext()){
@@ -342,5 +357,60 @@ public class Board {
 	public static Map<Character, String> getRooms() {
 		return rooms;
 	}
+	
+	public static LinkedList<Card> getDeck(){
+		return deck;
+	}
+
+	public HumanPlayer getHumanPlayer() {
+		return humanPlayer;
+	}
+
+	public void setHumanPlayer(HumanPlayer humanPlayer) {
+		this.humanPlayer = humanPlayer;
+	}
+
+	public Solution getTheAnswer() {
+		return theAnswer;
+	}
+
+	public void setTheAnswer(Solution theAnswer) {
+		this.theAnswer = theAnswer;
+	}
+
+	public LinkedList<Card> getSuspectCards() {
+		return suspectCards;
+	}
+
+	public void setSuspectCards(LinkedList<Card> suspectCards) {
+		this.suspectCards = suspectCards;
+	}
+
+	public LinkedList<Card> getWeaponCards() {
+		return weaponCards;
+	}
+
+	public void setWeaponCards(LinkedList<Card> weaponCards) {
+		this.weaponCards = weaponCards;
+	}
+
+	public LinkedList<Card> getRoomCards() {
+		return roomCards;
+	}
+
+	public void setRoomCards(LinkedList<Card> roomCards) {
+		this.roomCards = roomCards;
+	}
+
+	public LinkedList<ComputerPlayer> getComputerPlayers() {
+		return computerPlayers;
+	}
+
+	public void setComputerPlayers(LinkedList<ComputerPlayer> computerPlayers) {
+		this.computerPlayers = computerPlayers;
+	}
+	
+	
+	
 }
 	
