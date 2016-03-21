@@ -42,7 +42,7 @@ public class GameSetupTests {
 		computerPlayers = board.getComputerPlayers();
 		//check correct loading of first computer players
 		assertEquals("Mrs. Peacock", computerPlayers.peekFirst().getName());
-		assertEquals(Color.magenta,computerPlayers.peekFirst().getColor());
+		assertEquals(Color.blue,computerPlayers.peekFirst().getColor());
 		assertEquals(8, computerPlayers.peekFirst().getColumn());
 		assertEquals(3, computerPlayers.peekFirst().getRow());
 		//check correct loading of last computer players
