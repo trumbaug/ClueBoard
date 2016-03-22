@@ -92,9 +92,18 @@ public class GameSetupTests {
 		
 		//Test that each player has an equal amount of cards
 		testPlayer = board.getAllPlayers().get(0);
-		assertTrue(testPlayer.getMyCards().size() - 3 <= 1 && testPlayer.getMyCards().size() - 2 >= 0 );
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
 		testPlayer = board.getAllPlayers().get(1);
-		assertTrue(testPlayer.getMyCards().size() - 3 <= 1);
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		testPlayer = board.getAllPlayers().get(2);
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		testPlayer = board.getAllPlayers().get(3);
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		testPlayer = board.getAllPlayers().get(4);
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		testPlayer = board.getAllPlayers().get(5);
+		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		
 	}
 
 }

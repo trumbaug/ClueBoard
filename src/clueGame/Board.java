@@ -349,13 +349,15 @@ public class Board {
 		int counter = 0;
 		int allPlayersSize = allPlayers.size();
 		while(deck.size() > 0){
+			//System.out.println(deck.get(0));
 			allPlayers.get(counter).addCardsToHand(deck.get(0));
 			deck.remove(0);
 			counter++;
 			//If the cards in the suspectCards deck is greater than the number of players, bump counter back to zero to deal around the circle again.
-			if(counter == allPlayersSize - 1){
+			if(counter == allPlayersSize){
 				counter = 0;
 			}
+			//System.out.println(counter);
 		}
 		
 		//System.out.println(allPlayers.get(0));

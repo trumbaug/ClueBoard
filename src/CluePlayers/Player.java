@@ -9,7 +9,7 @@ public class Player {
 	int row;
 	String playerName;
 	Color color;
-	LinkedList<Card> myCards;//Picked a random data structure
+	LinkedList<Card> myCards = new LinkedList<Card>();//Picked a random data structure
 	LinkedList<Card> seenCards; //can change if find more suitable one
 	
 	public Player() {
@@ -30,7 +30,8 @@ public class Player {
 	}
 	
 	public void addCardsToHand(Card theCard){
-		myCards = new LinkedList<Card>();
+		//System.out.println(theCard);
+		
 		myCards.add(theCard);
 	}
 

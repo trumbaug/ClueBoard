@@ -34,4 +34,9 @@ public class Card {
 	public void setCardType(CardType cardType) {
 		this.cardType = cardType;
 	}
+
+	@Override
+	public String toString() {
+		return "Card [cardName=" + cardName + ", cardType=" + cardType + "]";
+	}
 }
