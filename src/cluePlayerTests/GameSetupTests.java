@@ -24,9 +24,7 @@ public class GameSetupTests {
 	public static void setUpBeforeClass() throws Exception {
 		board = new Board();
 		board.initialize();
-		Card weaponCard = new Card("candlestick", Card.CardType.WEAPON);
-		Card personCard = new Card("Mrs.Peacock", Card.CardType.PERSON);
-		Card roomCard = new Card("Office", Card.CardType.ROOM);
+		//How do we make these static? 
 	}
 
 	//Tests for loading players from file correctly 
@@ -67,16 +65,28 @@ public class GameSetupTests {
 		board.calcAdjacencies();
 		board.createDeck();
 		deck = board.getDeck();
-		
+		//Make sure that the deck contains the correct amount of cards in total and the correct amount of cards in each category
 		assertEquals(23, board.getDeck().size());
 		assertEquals(6, board.countPersonCards(deck));
 		assertEquals(6, board.countWeaponCards(deck));
 		assertEquals(11, board.countRoomCards(deck));
 		
-		//Need to fix these. 
-		//assertTrue(deck.contains(roomCard));
-		//assertTrue(deck.contains(personCard));
-		//assertTrue(deck.contains(weaponCard));
+		//Tests if deck contains a correct room, weapon, and suspect card
+		
+		Card weaponCard = new Card();
+		weaponCard = deck.get(6);
+		Card suspectCard = new Card();
+		suspectCard = deck.get(0);
+		Card roomCard = new Card();
+		roomCard = deck.get(12);
+		
+		assertEquals("candlestick", weaponCard.getCardName());
+		assertEquals(Card.CardType.WEAPON, weaponCard.getCardType());
+		assertEquals("Mrs. Peacock", suspectCard.getCardName());
+		assertEquals(Card.CardType.PERSON, suspectCard.getCardType());
+		assertEquals("Conservatory", roomCard.getCardName());
+		assertEquals(Card.CardType.ROOM, roomCard.getCardType());
+
 		
 	}
 	
@@ -90,7 +100,7 @@ public class GameSetupTests {
 		deck = board.getDeck();
 		assertEquals(0, deck.size());
 		
-		//Test that each player has an equal amount of cards
+		//Test that each player has either three or four cards in their hand. Fix 
 		testPlayer = board.getAllPlayers().get(0);
 		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
 		testPlayer = board.getAllPlayers().get(1);
@@ -103,6 +113,17 @@ public class GameSetupTests {
 		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
 		testPlayer = board.getAllPlayers().get(5);
 		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		
+		//Test whether one card is not given to more than one player
+		HumanPlayer human = new HumanPlayer();
+		ComputerPlayer computer = new ComputerPlayer();
+		Card testCard = new Card();
+		human = board.getHumanPlayer();
+		computer = board.getComputerPlayers().get(4);
+		testCard = human.getMyCards().get(2);
+		assertFalse(computer.getMyCards().contains(testCard));
+		
+		
 		
 	}
 
