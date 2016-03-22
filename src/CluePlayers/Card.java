@@ -22,4 +22,16 @@ public class Card {
 	public CardType getCardType(){
 		return cardType;
 	}
+	
+	public String getCardName(){
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
+	}
 }

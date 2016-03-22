@@ -53,6 +53,15 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
+	
+	public Board(String boardConfigFile, String roomConfigFile) {
+		super();
+		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
+		this.boardConfigFile = boardConfigFile;	
+		rooms = new HashMap<Character,String>();
+		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
+		deck = new LinkedList<Card>();
+	}
 
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
@@ -354,6 +363,16 @@ public class Board {
 			}
 		}
 		return counter; 
+	}
+	
+	public boolean containsCard(LinkedList<Card> deck, String name, CardType type){
+		for(Card c: deck){
+			if (c.getCardType() == type && c.getCardName() == name){
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 	public void selectAnswer(){
