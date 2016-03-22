@@ -99,20 +99,22 @@ public class GameSetupTests {
 		//Test that all cards are dealt
 		deck = board.getDeck();
 		assertEquals(0, deck.size());
-		
+		int deckSize = board.getDeckSize();
+		int handSize = deckSize/board.getAllPlayers().size();
+		System.out.println(handSize);
 		//Test that each player has either three or four cards in their hand. Fix 
 		testPlayer = board.getAllPlayers().get(0);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );
 		testPlayer = board.getAllPlayers().get(1);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1  );
 		testPlayer = board.getAllPlayers().get(2);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1  );
 		testPlayer = board.getAllPlayers().get(3);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );
 		testPlayer = board.getAllPlayers().get(4);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );
 		testPlayer = board.getAllPlayers().get(5);
-		assertTrue(testPlayer.getMyCards().size() <= 4 && testPlayer.getMyCards().size() >= 3 );
+		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );
 		
 		//Test whether one card is not given to more than one player
 		HumanPlayer human = new HumanPlayer();

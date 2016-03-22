@@ -41,6 +41,7 @@ public class Board {
 	private LinkedList<Player> allPlayers;
 	private LinkedList<ComputerPlayer> computerPlayers;
 	private HumanPlayer humanPlayer;
+	private int deckSize;
 	
 
 
@@ -226,8 +227,7 @@ public class Board {
 		String dummy;
 		String ar[];
 		allPlayers = new LinkedList<Player>();
-		computerPlayers = new LinkedList<ComputerPlayer>();
-		humanPlayer = new HumanPlayer();
+	
 		suspectCards = new LinkedList<Card>();
 		weaponCards = new LinkedList<Card>();
 		
@@ -328,11 +328,13 @@ public class Board {
 		}
 	}
 
+
 	public void createDeck(){
 		deck = new LinkedList<Card>();
 		deck.addAll(suspectCards);
 		deck.addAll(weaponCards);
 		deck.addAll(roomCards);
+		deckSize = deck.size();
 	}
 	
 	public void dealCards(){
@@ -395,6 +397,8 @@ public class Board {
 	}
 	
 	public void createHumanComputer(){
+		computerPlayers = new LinkedList<ComputerPlayer>();
+		humanPlayer = new HumanPlayer();
 		for( Player c: allPlayers ){
 			if(c.getName().equals("Miss Scarlett")){
 				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
@@ -511,6 +515,13 @@ public class Board {
 
 	public void setComputerPlayers(LinkedList<ComputerPlayer> computerPlayers) {
 		this.computerPlayers = computerPlayers;
+	}
+	
+	public int getDeckSize() {
+		return deckSize;
+	}
+	public void setDeckSize(int deckSize) {
+		this.deckSize = deckSize;
 	}
 
 
