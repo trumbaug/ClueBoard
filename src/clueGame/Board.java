@@ -420,7 +420,17 @@ public class Board {
 	}
 
 	public boolean checkAccusation(Solution accusation){
-		return false;
+		if(theAnswer.person != accusation.person){
+			return false;
+		}
+		if(theAnswer.weapon != accusation.weapon){
+			return false;
+		}
+		if(theAnswer.room != accusation.room){
+			return false;
+		}
+		
+		return true;
 	}
 
 	public BoardCell getCellAt(int row, int column) {
