@@ -41,6 +41,8 @@ public class Board {
 	private LinkedList<Player> allPlayers;
 	private LinkedList<ComputerPlayer> computerPlayers;
 	private HumanPlayer humanPlayer;
+	
+
 
 	public Board()  {
 		super();
@@ -53,16 +55,20 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-	
+	///*
 	public Board(String boardConfigFile, String roomConfigFile) {
 		super();
+		this.boardConfigFile = boardConfigFile;
+		this.roomConfigFile = roomConfigFile;
+		weaponsConfigFile = "weapons.txt";
+		playersConfigFile = "people.csv";
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
 		this.boardConfigFile = boardConfigFile;	
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-
+//*/
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -82,6 +88,7 @@ public class Board {
 			loadConfigFiles();
 			calcAdjacencies();
 			createDeck();
+			dealCards();
 		}
 		catch (BadConfigFormatException e)
 		{
@@ -333,6 +340,13 @@ public class Board {
 		deck.addAll(suspectCards);
 		deck.addAll(weaponCards);
 		deck.addAll(roomCards);
+	}
+	
+	public void dealCards(){
+		for(Player p: allPlayers){
+			
+		}
+		
 	}
 	
 	public int countPersonCards(LinkedList<Card> deck){
