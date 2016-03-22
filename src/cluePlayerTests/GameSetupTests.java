@@ -123,8 +123,6 @@ public class GameSetupTests {
 		testCard = human.getMyCards().get(2);
 		assertFalse(computer.getMyCards().contains(testCard));
 		
-		
-		
 	}
 
 }

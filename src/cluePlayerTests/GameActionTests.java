@@ -6,19 +6,26 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import CluePlayers.Solution;
+import clueGame.Board;
+
 public class GameActionTests {
+	private static Board board;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
+		board = new Board();
+		board.initialize();
 	}
 
 	@Test
 	public void accusationTest() {
-		
+		Solution test = new Solution();
+		test.person = "Miss Scarlett";
+		test.room = "Library";
+		test.weapon = "candlestick";
+		board.setTheAnswer(test);
+		assertTrue(board.checkAccusation(test));
 	}
 	
 	@Test 
