@@ -83,6 +83,10 @@ public class Player {
 		return color;
 	}
 
+	public void setMyCards(LinkedList<Card> myCards) {
+		this.myCards = myCards;
+	}
+
 	@Override
 	public String toString() {
 		return "Player [column=" + column + ", row=" + row + ", playerName=" + playerName + ", color=" + color

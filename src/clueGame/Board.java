@@ -89,6 +89,7 @@ public class Board {
 			calcAdjacencies();
 			createDeck();
 			dealCards();
+			createHumanComputer();
 		}
 		catch (BadConfigFormatException e)
 		{
@@ -253,17 +254,6 @@ public class Board {
 		}catch (NumberFormatException e){
 			e.getMessage();
 		}
-		for( Player c: allPlayers ){
-			if(c.getName().equals("Miss Scarlett")){
-				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
-				humanPlayer.setName(c.getName());
-				
-			}
-			else{
-				ComputerPlayer cp = new ComputerPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
-				computerPlayers.add(cp);
-			}
-		}
 
 		while(inWeapon.hasNext()){
 			String cardName;
@@ -402,6 +392,22 @@ public class Board {
 		}
 		return false;
 		
+	}
+	
+	public void createHumanComputer(){
+		for( Player c: allPlayers ){
+			if(c.getName().equals("Miss Scarlett")){
+				humanPlayer = new HumanPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				humanPlayer.setName(c.getName());
+				humanPlayer.setMyCards(c.getMyCards());
+			}
+			else{
+				ComputerPlayer cp = new ComputerPlayer(c.getColumn(), c.getRow(), c.getName(), c.getColor());
+				cp.setMyCards(c.getMyCards());
+				computerPlayers.add(cp);
+				
+			}
+		}
 	}
 	
 	public void selectAnswer(){
