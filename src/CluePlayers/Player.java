@@ -9,7 +9,7 @@ public class Player {
 	int row;
 	String playerName;
 	Color color;
-	LinkedList<Card> myCards; //Picked a random data structure
+	LinkedList<Card> myCards;//Picked a random data structure
 	LinkedList<Card> seenCards; //can change if find more suitable one
 	
 	public Player() {
@@ -28,13 +28,17 @@ public class Player {
 		Card card = new Card();
 		return card;
 	}
+	
+	public void addCardsToHand(Card theCard){
+		myCards = new LinkedList<Card>();
+		myCards.add(theCard);
+	}
 
 	public int getColumn() {
 		return column;
 	}
 
 	public void setColumn(int column) {
-		System.out.println(column);
 		this.column = column;
 	}
 
@@ -58,6 +62,10 @@ public class Player {
 		return color;
 	}
 
+	public LinkedList<Card> getMyCards() {
+		return myCards;
+	}
+
 	public void setColor(String color) {
 		this.color = convertColor(color);
 	}
@@ -73,5 +81,12 @@ public class Player {
 		}
 		return color;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [column=" + column + ", row=" + row + ", playerName=" + playerName + ", color=" + color
+				+ ", myCards=" + myCards + ", seenCards=" + seenCards + "]";
+	}
 	
 }
+

@@ -106,6 +106,9 @@ public class Board {
 		}
 	}
 
+	public LinkedList<Player> getAllPlayers() {
+		return allPlayers;
+	}
 	public void loadRoomConfig()  throws FileNotFoundException, BadConfigFormatException{
 		FileReader reader = null;
 		roomCards = new LinkedList<Card>();
@@ -343,9 +346,19 @@ public class Board {
 	}
 	
 	public void dealCards(){
-		for(Player p: allPlayers){
-			
+		int counter = 0;
+		int allPlayersSize = allPlayers.size();
+		while(deck.size() > 0){
+			allPlayers.get(counter).addCardsToHand(deck.get(0));
+			deck.remove(0);
+			counter++;
+			//If the cards in the suspectCards deck is greater than the number of players, bump counter back to zero to deal around the circle again.
+			if(counter == allPlayersSize - 1){
+				counter = 0;
+			}
 		}
+		
+		//System.out.println(allPlayers.get(0));
 		
 	}
 	

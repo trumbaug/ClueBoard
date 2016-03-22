@@ -3,6 +3,7 @@ package cluePlayerTests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import org.junit.Before;
@@ -12,6 +13,8 @@ import org.junit.Test;
 import CluePlayers.Card;
 import CluePlayers.ComputerPlayer;
 import CluePlayers.HumanPlayer;
+import CluePlayers.Player;
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 
 public class GameSetupTests {
@@ -31,7 +34,6 @@ public class GameSetupTests {
 	public void humanPlayerTest() {
 		HumanPlayer human = new HumanPlayer();
 		human = board.getHumanPlayer();
-		System.out.println(human.getName());
 		//check correct loading of human player for name, color, starting location
 		assertEquals("Miss Scarlett", human.getName());
 		assertEquals(Color.red, human.getColor());
@@ -56,10 +58,15 @@ public class GameSetupTests {
 	}
 	
 	@Test
-	public void deckTest(){
+	public void deckTest() throws FileNotFoundException, BadConfigFormatException{
 		LinkedList<Card> deck = new LinkedList<Card>();
+		//Is this ok to do?? Otherwise I have issues getting the initial deck count to work correctly 
+		board.loadRoomConfig();
+		board.loadBoardConfig();
+		board.loadConfigFiles();
+		board.calcAdjacencies();
+		board.createDeck();
 		deck = board.getDeck();
-		
 		
 		assertEquals(23, board.getDeck().size());
 		assertEquals(6, board.countPersonCards(deck));
@@ -76,10 +83,18 @@ public class GameSetupTests {
 	
 	@Test
 	public void dealTest(){
+		Player testPlayer = new Player();
+		
 		LinkedList<Card> deck = new LinkedList<Card>();
+		//Test that all cards are dealt
 		deck = board.getDeck();
 		assertEquals(0, deck.size());
 		
+		//Test that each player has an equal amount of cards
+		testPlayer = board.getAllPlayers().get(0);
+		assertTrue(testPlayer.getMyCards().size() - 3 <= 1 && testPlayer.getMyCards().size() - 2 >= 0 );
+		testPlayer = board.getAllPlayers().get(1);
+		assertTrue(testPlayer.getMyCards().size() - 3 <= 1);
 	}
 
 }
