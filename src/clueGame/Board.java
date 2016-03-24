@@ -56,7 +56,7 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-	///*
+
 	public Board(String boardConfigFile, String roomConfigFile) {
 		super();
 		this.boardConfigFile = boardConfigFile;
@@ -69,7 +69,7 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-//*/
+
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -521,7 +521,13 @@ public class Board {
 		this.deckSize = deckSize;
 	}
 
+	public Set<BoardCell> getVisited() {
+		return visited;
+	}
 
+	public void setVisited(Set<BoardCell> visited) {
+		this.visited = visited;
+	}
 
 }
 
