@@ -100,17 +100,17 @@ public class GameActionTests {
 		ComputerPlayer player = new ComputerPlayer();
 		// Pick room as selected location
 		board.calcTargets(2, 3, 2);
-		boolean loc_2_3 = false;
+		boolean loc_2_2 = false;
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
 			
-			if (selected == board.getCellAt(5, 0))
-				loc_2_3 = true;
+			if (selected == board.getCellAt(2, 2))
+				loc_2_2 = true;
 			else
 				fail("Invalid target selected");
 			// Ensure room is selected if not already visited 100 times
-			assertTrue(loc_2_3);
+			assertTrue(loc_2_2);
 		}
 	}
 	

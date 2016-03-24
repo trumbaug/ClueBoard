@@ -6,6 +6,9 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection doorDir;
 	
+	public BoardCell() {
+		super();
+	}
 	
 	public BoardCell(int row, int column, char initial, DoorDirection d) {
 		super();
@@ -32,6 +35,7 @@ public class BoardCell {
 			default: doorDir = DoorDirection.NONE;
 		}
 	}
+	
 	public char getInitial() {
 		return initial;
 	}

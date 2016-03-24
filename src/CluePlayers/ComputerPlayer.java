@@ -1,6 +1,7 @@
 package CluePlayers;
 
 import java.awt.Color;
+import java.util.HashSet;
 import java.util.Set;
 
 import clueGame.Board;
@@ -18,8 +19,18 @@ public class ComputerPlayer extends Player{
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets){
-		BoardCell cell = null;
-		return cell;
+		BoardCell selection = new BoardCell();
+		Set<BoardCell> currentTargets = new HashSet<BoardCell>();
+		//Set<BoardCell> currentVisited = new HashSet<BoardCell>();
+		currentTargets = targets;
+		//currentVisited = board.getVisited();
+		for (BoardCell c : currentTargets){
+			if(c.isDoorway()){
+					selection = c;
+					break;
+			}
+		}
+		return selection;
 	}
 	
 	public void makeAccusation(){
