@@ -225,6 +225,28 @@ public class GameActionTests {
 		board.getAllPlayers().add(computerplayer1);
 
 		assertEquals(kitchenCard, board.disproveSuggestion(theSuggestion4, computerplayer1));	
+		
+		//Test for one player, multiple matches
+		boolean personCheck = false;
+		boolean roomCheck = false;
+		boolean weaponCheck = false;
+		
+		for (int i=0; i<100; i++) {
+			Solution theSuggestionAll = new Solution("Mrs. Peacock", "Kitchen", "lead pipe");
+		
+			if (peacockCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+				personCheck = true;
+			else if (kitchenCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+				roomCheck = true;
+			else if (leadpipeCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+				weaponCheck = true;
+			else
+				fail("Invalid target selected");
+		}
+		// Ensure each target was selected at least once
+		assertTrue(personCheck);
+		assertTrue(roomCheck);
+		assertTrue(weaponCheck);
 
 		//Test that all players queried
 		
