@@ -529,5 +529,11 @@ public class Board {
 		this.visited = visited;
 	}
 
+	public Object[] disproveSuggestion(Solution theSuggestion, Player computerplayer) {
+		
+
+		return null;
+	}
+
 }
 

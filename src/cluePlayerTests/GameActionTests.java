@@ -3,13 +3,16 @@ package cluePlayerTests;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import CluePlayers.Card;
 import CluePlayers.ComputerPlayer;
+import CluePlayers.Player;
 import CluePlayers.Solution;
 import clueGame.Board;
 import clueGame.BoardCell;
@@ -150,9 +153,59 @@ public class GameActionTests {
 	
 	@Test
 	public void disproveSuggestionTest(){
-		//Test for one player, one correct match
+		Player humanplayer = new Player();
+		Player computerplayer1 = new Player();
+		Player computerplayer2 = new Player();
+		
+		Card mustardCard = new Card();
+		Card peacockCard = new Card();
+		
+		Card knifeCard = new Card();
+		Card leadpipeCard = new Card();
+		
+		Card kitchenCard = new Card();
+		Card studioCard = new Card();
+
+		mustardCard = new Card("Colonel Mustard", Card.CardType.PERSON);
+		peacockCard = new Card("Mrs. Peacock", Card.CardType.PERSON);
+
+		knifeCard = new Card("knife", Card.CardType.WEAPON);
+		leadpipeCard = new Card("lead pipe", Card.CardType.WEAPON);
+		
+		kitchenCard = new Card("Kitchen", Card.CardType.ROOM);
+		studioCard = new Card("Studio", Card.CardType.ROOM);
+		
+		computerplayer1.getMyCards().add(mustardCard);
+		computerplayer1.getMyCards().add(leadpipeCard);
+		
+		computerplayer2.getMyCards().add(peacockCard);
+		computerplayer2.getMyCards().add(studioCard);
+		
+		humanplayer.getMyCards().add(kitchenCard);
+		humanplayer.getMyCards().add(knifeCard);
+		
+		
+		
+		//If no one has a card, return null 
+		
 		//Test for one player, multiple possible matches
+		
+		Solution theSuggestion = new Solution("Mrs. White", "Cellar", "dagger");
+		
+		computerplayer1.getMyCards().add(mustardCard);
+		computerplayer1.getMyCards().add(leadpipeCard);
+		
+		computerplayer1.getMyCards().add(peacockCard);
+		computerplayer1.getMyCards().add(studioCard);
+		
+		computerplayer1.getMyCards().add(kitchenCard);
+		computerplayer1.getMyCards().add(knifeCard);
+		
+		assertNull(board.disproveSuggestion(theSuggestion, computerplayer1));
+		
+		
 		//Test that all players queried
+		
 	}
 	
 	@Test
