@@ -24,7 +24,6 @@ public class GameSetupTests {
 	public static void setUpBeforeClass() throws Exception {
 		board = new Board();
 		board.initialize();
-		//How do we make these static? 
 	}
 
 	//Tests for loading players from file correctly 
@@ -58,7 +57,6 @@ public class GameSetupTests {
 	@Test
 	public void deckTest() throws FileNotFoundException, BadConfigFormatException{
 		LinkedList<Card> deck = new LinkedList<Card>();
-		//Is this ok to do?? Otherwise I have issues getting the initial deck count to work correctly 
 		board.loadRoomConfig();
 		board.loadBoardConfig();
 		board.loadConfigFiles();
@@ -72,29 +70,25 @@ public class GameSetupTests {
 		assertEquals(11, board.countRoomCards(deck));
 		
 		//Tests if deck contains a correct room, weapon, and suspect card
-		
 		Card weaponCard = new Card();
 		weaponCard = deck.get(6);
 		Card suspectCard = new Card();
 		suspectCard = deck.get(0);
 		Card roomCard = new Card();
 		roomCard = deck.get(12);
-		
 		assertEquals("candlestick", weaponCard.getCardName());
 		assertEquals(Card.CardType.WEAPON, weaponCard.getCardType());
 		assertEquals("Mrs. Peacock", suspectCard.getCardName());
 		assertEquals(Card.CardType.PERSON, suspectCard.getCardType());
-		assertEquals("Conservatory", roomCard.getCardName());
+		assertEquals("Kitchen", roomCard.getCardName());
 		assertEquals(Card.CardType.ROOM, roomCard.getCardType());
 
 		
 	}
 	
-	
 	@Test
 	public void dealTest(){
 		Player testPlayer = new Player();
-		
 		LinkedList<Card> deck = new LinkedList<Card>();
 		//Test that all cards are dealt
 		deck = board.getDeck();

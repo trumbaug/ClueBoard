@@ -48,8 +48,8 @@ public class Board {
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
-		boardConfigFile = "ClueLayout.csv";
-		roomConfigFile = "ClueLegend.txt";
+		boardConfigFile = "RMlayout.csv";
+		roomConfigFile = "RMlegend.txt";
 		weaponsConfigFile = "weapons.txt";
 		playersConfigFile = "people.csv";
 		rooms = new HashMap<Character,String>();
@@ -349,11 +349,7 @@ public class Board {
 			if(counter == allPlayersSize){
 				counter = 0;
 			}
-			//System.out.println(counter);
 		}
-		
-		//System.out.println(allPlayers.get(0));
-		
 	}
 	
 	public int countPersonCards(LinkedList<Card> deck){
@@ -396,6 +392,7 @@ public class Board {
 		
 	}
 	
+	//Takes allPlayers in order to convert to specific Player subclasses
 	public void createHumanComputer(){
 		computerPlayers = new LinkedList<ComputerPlayer>();
 		humanPlayer = new HumanPlayer();

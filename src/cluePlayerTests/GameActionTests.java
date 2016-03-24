@@ -6,8 +6,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import CluePlayers.ComputerPlayer;
 import CluePlayers.Solution;
 import clueGame.Board;
+import clueGame.BoardCell;
 
 public class GameActionTests {
 	private static Board board;
@@ -53,8 +55,42 @@ public class GameActionTests {
 		assertFalse(board.checkAccusation(test4));
 	}
 	
+	//Testing selecting a location with random picking
 	@Test 
-	public void targetLocationTest(){
+	public void randomTargetLocationTest(){
+		ComputerPlayer player = new ComputerPlayer();
+		// Pick a location with no rooms in target, just three targets
+		board.calcTargets(14, 0, 2);
+		boolean loc_12_0 = false;
+		boolean loc_14_2 = false;
+		boolean loc_15_1 = false;
+		// Run the test 100 times
+		for (int i=0; i<100; i++) {
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getCellAt(12, 0))
+				loc_12_0 = true;
+			else if (selected == board.getCellAt(14, 2))
+				loc_14_2 = true;
+			else if (selected == board.getCellAt(15, 1))
+				loc_15_1 = true;
+			else
+				fail("Invalid target selected");
+		}
+		// Ensure each target was selected at least once
+		assertTrue(loc_12_0);
+		assertTrue(loc_14_2);
+		assertTrue(loc_15_1);							
+	}
+	
+	//Testing selecting a location if room is NOT last one visited 
+	@Test
+	public void notVisitedRoomTargetLocationTest(){
+		
+	}
+	
+	//Testing selecting a location if room is last one visited
+	@Test 
+	public void VisitedRoomTargetLocationTest(){
 		
 	}
 	
