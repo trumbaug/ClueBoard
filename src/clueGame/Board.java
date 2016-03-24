@@ -48,15 +48,15 @@ public class Board {
 	public Board()  {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
-		boardConfigFile = "ClueLayout.csv";
-		roomConfigFile = "ClueLegend.txt";
+		boardConfigFile = "RMlayout.csv";
+		roomConfigFile = "RMlegend.txt";
 		weaponsConfigFile = "weapons.txt";
 		playersConfigFile = "people.csv";
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-	///*
+
 	public Board(String boardConfigFile, String roomConfigFile) {
 		super();
 		this.boardConfigFile = boardConfigFile;
@@ -69,7 +69,7 @@ public class Board {
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
 	}
-//*/
+
 	public Board(String boardConfigFile, String roomConfigFile, String playerConfigFile, String weaponsConfigFile) {
 		super();
 		board = new BoardCell[BOARD_SIZE][BOARD_SIZE];
@@ -349,11 +349,7 @@ public class Board {
 			if(counter == allPlayersSize){
 				counter = 0;
 			}
-			//System.out.println(counter);
 		}
-		
-		//System.out.println(allPlayers.get(0));
-		
 	}
 	
 	public int countPersonCards(LinkedList<Card> deck){
@@ -396,6 +392,7 @@ public class Board {
 		
 	}
 	
+	//Takes allPlayers in order to convert to specific Player subclasses
 	public void createHumanComputer(){
 		computerPlayers = new LinkedList<ComputerPlayer>();
 		humanPlayer = new HumanPlayer();
@@ -524,7 +521,13 @@ public class Board {
 		this.deckSize = deckSize;
 	}
 
+	public Set<BoardCell> getVisited() {
+		return visited;
+	}
 
+	public void setVisited(Set<BoardCell> visited) {
+		this.visited = visited;
+	}
 
 }
 

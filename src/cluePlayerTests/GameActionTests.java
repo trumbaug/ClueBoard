@@ -2,12 +2,18 @@ package cluePlayerTests;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import CluePlayers.ComputerPlayer;
 import CluePlayers.Solution;
 import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.DoorDirection;
 
 public class GameActionTests {
 	private static Board board;
@@ -53,9 +59,88 @@ public class GameActionTests {
 		assertFalse(board.checkAccusation(test4));
 	}
 	
+	//Testing selecting a location with random picking
 	@Test 
-	public void targetLocationTest(){
-		
+	public void randomTargetLocationTest(){
+		ComputerPlayer player = new ComputerPlayer();
+		// Pick a location with no rooms in target, just three targets
+		board.calcTargets(7, 0, 2);
+		boolean loc_5_0 = false;
+		boolean loc_7_2 = false;
+		boolean loc_9_0 = false;
+		boolean loc_6_1 = false;
+		boolean loc_8_1 = false;
+		// Run the test 100 times
+		for (int i=0; i<100; i++) {
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getCellAt(5, 0))
+				loc_5_0 = true;
+			else if (selected == board.getCellAt(7, 2))
+				loc_7_2 = true;
+			else if (selected == board.getCellAt(9, 0))
+				loc_9_0 = true;
+			else if (selected == board.getCellAt(6, 1))
+				loc_6_1 = true;
+			else if (selected == board.getCellAt(8, 1))
+				loc_8_1 = true;
+			else
+				fail("Invalid target selected");
+		}
+		// Ensure each target was selected at least once
+		assertTrue(loc_5_0);
+		assertTrue(loc_7_2);
+		assertTrue(loc_9_0);
+		assertTrue(loc_6_1);
+		assertTrue(loc_8_1);
+	}
+	
+	//Testing selecting a location if room is NOT last one visited 
+	@Test
+	public void notVisitedRoomTargetLocationTest(){
+		ComputerPlayer player = new ComputerPlayer();
+		// Pick room as selected location
+		board.calcTargets(2, 3, 2);
+		boolean loc_2_2 = false;
+		// Run the test 100 times
+		for (int i=0; i<100; i++) {
+			BoardCell selected = player.pickLocation(board.getTargets());
+			
+			if (selected == board.getCellAt(2, 2))
+				loc_2_2 = true;
+			else
+				fail("Invalid target selected");
+			// Ensure room is selected if not already visited 100 times
+			assertTrue(loc_2_2);
+		}
+	}
+	
+	//Testing selecting a location if room is last one visited
+	@Test 
+	public void VisitedRoomTargetLocationTest(){
+		ComputerPlayer player = new ComputerPlayer();
+		Set<BoardCell> visited = new HashSet<BoardCell>();
+		BoardCell testRoom = new BoardCell(2, 2, 'K', DoorDirection.RIGHT);
+		// Pick random location if room already visited
+		board.calcTargets(2, 3, 2);
+		visited = board.getVisited();
+		visited.add(testRoom);
+		board.setVisited(visited);
+		boolean loc_2_3 = false;
+		// Run the test 100 times
+		for (int i=0; i<100; i++) {
+			BoardCell selected = player.pickLocation(board.getTargets());
+			int selectRoomCount = 0;
+			
+			if (selected == board.getCellAt(5, 0)){
+				loc_2_3 = true;
+				selectRoomCount++;
+			}
+			if(0 < selectRoomCount && selectRoomCount <= 2){
+				fail("Invalid target selected");
+			}
+		}
+		// Ensure room is selected if not already visited
+		assertTrue(loc_2_3);
 	}
 	
 	@Test

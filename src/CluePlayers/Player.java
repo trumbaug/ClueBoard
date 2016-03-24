@@ -30,8 +30,6 @@ public class Player {
 	}
 	
 	public void addCardsToHand(Card theCard){
-		//System.out.println(theCard);
-		
 		myCards.add(theCard);
 	}
 
