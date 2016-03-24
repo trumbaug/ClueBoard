@@ -186,7 +186,7 @@ public class GameActionTests {
 		
 		//If no one has a card, return null 
 		
-		//Test for one player, multiple possible matches
+		//Test for one player, once correct match
 		
 		//Should return null
 		Solution theSuggestion = new Solution("Mrs. White", "Cellar", "dagger");
@@ -202,9 +202,30 @@ public class GameActionTests {
 		computerplayer1.getMyCards().add(kitchenCard);
 		computerplayer1.getMyCards().add(knifeCard);
 		
-		assertNull(board.disproveSuggestion(theSuggestion, computerplayer1));
+		assertNull(board.disproveSuggestion(theSuggestion, computerplayer1));	
+		
+		// Check that the correct person is returned
+		Solution theSuggestion2 = new Solution("Mrs. Peacock", "Cellar", "dagger");
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer1);
+		
+		assertEquals(peacockCard, board.disproveSuggestion(theSuggestion2, computerplayer1));	
+		
+		// Check that the correct weapon is returned
+		Solution theSuggestion3 = new Solution("Mrs. White", "Cellar", "lead pipe");
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer1);
 		
 		
+		assertEquals(leadpipeCard, board.disproveSuggestion(theSuggestion3, computerplayer1));	
+		
+		// Check that the correct room is returned
+		Solution theSuggestion4 = new Solution("Mrs. White", "Kitchen", "dagger");
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer1);
+
+		assertEquals(kitchenCard, board.disproveSuggestion(theSuggestion4, computerplayer1));	
+
 		//Test that all players queried
 		
 	}
