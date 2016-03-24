@@ -184,13 +184,14 @@ public class GameActionTests {
 		humanplayer.getMyCards().add(kitchenCard);
 		humanplayer.getMyCards().add(knifeCard);
 		
-		
-		
 		//If no one has a card, return null 
 		
 		//Test for one player, multiple possible matches
 		
+		//Should return null
 		Solution theSuggestion = new Solution("Mrs. White", "Cellar", "dagger");
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer1);
 		
 		computerplayer1.getMyCards().add(mustardCard);
 		computerplayer1.getMyCards().add(leadpipeCard);

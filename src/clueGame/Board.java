@@ -529,11 +529,23 @@ public class Board {
 		this.visited = visited;
 	}
 
-	public Object[] disproveSuggestion(Solution theSuggestion, Player computerplayer) {
-		
+	public Card disproveSuggestion(Solution theSuggestion, Player computerplayer) {
+		for(Player p: allPlayers){
+			for(Card c: p.getMyCards()){
+				if(c.getCardName() == theSuggestion.person){
+					return c;
+				}
+				if(c.getCardName() == theSuggestion.weapon){
+					return c;
+				}
+				if(c.getCardName() == theSuggestion.room){
+					return c;
+				}
+			}
+
+		}
 
 		return null;
 	}
-
 }
 
