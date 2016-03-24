@@ -63,8 +63,11 @@ public class GameActionTests {
 	@Test 
 	public void randomTargetLocationTest(){
 		ComputerPlayer player = new ComputerPlayer();
+		//player = board.getComputerPlayers().get(0);
+		//System.out.println(player);
 		// Pick a location with no rooms in target, just three targets
 		board.calcTargets(7, 0, 2);
+		//System.out.println(board.getTargets());
 		boolean loc_5_0 = false;
 		boolean loc_7_2 = false;
 		boolean loc_9_0 = false;
@@ -73,6 +76,8 @@ public class GameActionTests {
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
+			//System.out.println(board.getTargets());
+
 			if (selected == board.getCellAt(5, 0))
 				loc_5_0 = true;
 			else if (selected == board.getCellAt(7, 2))

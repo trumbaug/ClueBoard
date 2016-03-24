@@ -23,6 +23,7 @@ public class ComputerPlayer extends Player{
 		Set<BoardCell> currentTargets = new HashSet<BoardCell>();
 		//Set<BoardCell> currentVisited = new HashSet<BoardCell>();
 		currentTargets = targets;
+		System.out.println(currentTargets);
 		//currentVisited = board.getVisited();
 		for (BoardCell c : currentTargets){
 			if(c.isDoorway()){
