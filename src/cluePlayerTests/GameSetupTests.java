@@ -24,7 +24,6 @@ public class GameSetupTests {
 	public static void setUpBeforeClass() throws Exception {
 		board = new Board();
 		board.initialize();
-		//How do we make these static? 
 	}
 
 	//Tests for loading players from file correctly 
@@ -58,7 +57,7 @@ public class GameSetupTests {
 	@Test
 	public void deckTest() throws FileNotFoundException, BadConfigFormatException{
 		LinkedList<Card> deck = new LinkedList<Card>();
-		//Is this ok to do?? Otherwise I have issues getting the initial deck count to work correctly 
+		//Load specific rooms and create deck but don't deal cards so that we can test the number of cards. 
 		board.loadRoomConfig();
 		board.loadBoardConfig();
 		board.loadConfigFiles();
@@ -102,7 +101,7 @@ public class GameSetupTests {
 		int deckSize = board.getDeckSize();
 		int handSize = deckSize/board.getAllPlayers().size();
 		System.out.println(handSize);
-		//Test that each player has either three or four cards in their hand. Fix 
+		//Test whether each player has either three or four cards in their hand. 
 		testPlayer = board.getAllPlayers().get(0);
 		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );
 		testPlayer = board.getAllPlayers().get(1);
