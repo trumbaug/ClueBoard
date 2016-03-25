@@ -282,7 +282,7 @@ public class GameActionTests {
 	
 	@Test
 	public void computerPlayerSuggestionTest(){
-		
+		fail("not yet implemented");
 	}
 
 }
