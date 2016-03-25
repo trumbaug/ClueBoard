@@ -442,6 +442,7 @@ public class Board {
 		//Loop through each player and get their hand of cards. Then loop through all their cards and see if any cards match the suggestion. If so, add
 		//that card to the possibleMatches vector. 
 		for(Player p: allPlayers){
+			if(p !=computerplayer){
 			for(Card c: p.getMyCards()){
 				if(c.getCardName() == theSuggestion.person){
 					possibleMatches.addElement(c);
@@ -453,6 +454,7 @@ public class Board {
 					possibleMatches.addElement(c);
 
 				}
+			}
 			}
 			//If the possible matches vector only contains one element, return that element
 			if(possibleMatches.size() == 1){

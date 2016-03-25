@@ -206,7 +206,7 @@ public class GameActionTests {
 		board.getAllPlayers().clear();
 		board.getAllPlayers().add(computerplayer1);
 		
-		assertEquals(peacockCard, board.disproveSuggestion(theSuggestion2, computerplayer1));	
+		assertEquals(peacockCard, board.disproveSuggestion(theSuggestion2, computerplayer2));	
 		
 		// Check that the correct weapon is returned
 		Solution theSuggestion3 = new Solution("Mrs. White", "Cellar", "lead pipe");
@@ -214,14 +214,14 @@ public class GameActionTests {
 		board.getAllPlayers().add(computerplayer1);
 		
 		
-		assertEquals(leadpipeCard, board.disproveSuggestion(theSuggestion3, computerplayer1));	
+		assertEquals(leadpipeCard, board.disproveSuggestion(theSuggestion3, computerplayer2));	
 		
 		// Check that the correct room is returned
 		Solution theSuggestion4 = new Solution("Mrs. White", "Kitchen", "dagger");
 		board.getAllPlayers().clear();
 		board.getAllPlayers().add(computerplayer1);
 
-		assertEquals(kitchenCard, board.disproveSuggestion(theSuggestion4, computerplayer1));	
+		assertEquals(kitchenCard, board.disproveSuggestion(theSuggestion4, computerplayer2));	
 	
 		//Test for one player, multiple matches
 		board.getAllPlayers().clear();
@@ -239,14 +239,15 @@ public class GameActionTests {
 		for (int i=0; i<100; i++) {
 			Solution theSuggestionAll = new Solution("Mrs. Peacock", "Kitchen", "lead pipe");
 		
-			if (peacockCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
+			if (peacockCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
 				personCheck = true;
-			else if (kitchenCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
+			else if (kitchenCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
 				roomCheck = true;
-			else if (leadpipeCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
+			else if (leadpipeCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
 				weaponCheck = true;
 			
 		}
+		
 		// Ensure each target was selected at least once
 		assertTrue(personCheck);
 		assertTrue(roomCheck);
@@ -255,7 +256,7 @@ public class GameActionTests {
 		//Test that all players queried
 		computerplayer3.getMyCards().add(mustardCard);
 		
-		//Add all three players to getAllPlayers
+		//Add all three players to getAllPlayers to test that all players are questioned
 		board.getAllPlayers().clear();
 		board.getAllPlayers().add(computerplayer2); // Has peacock, kitchen and leadpipe
 		board.getAllPlayers().add(computerplayer3); // Has Mustard
@@ -271,11 +272,11 @@ public class GameActionTests {
 		
 		//Make a suggestion that returns null because the person who made the suggestion holds that card
 		Solution theSuggestionAll4 = new Solution("Mrs. Peacock", "Bedroom", "dagger");
-		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll4, computerplayer2));
+		assertNull(board.disproveSuggestion(theSuggestionAll4, computerplayer2));
 		
-		//Make a suggestion that requires the first person to disprove which should be computer player 2
-		Solution theSuggestionAll5 = new Solution("Mrs. Peacock", "Bedroom", "knife");
-		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll5, computerplayer3));
+		//computerplayer 2 makes a suggestion that requires the last person to disprove which should be the human player
+		Solution theSuggestionAll5 = new Solution("Mrs. White", "Bedroom", "knife");
+		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll5, computerplayer2));
 		
 	}
 	
