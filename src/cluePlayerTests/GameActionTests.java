@@ -112,14 +112,17 @@ public class GameActionTests {
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
-			
-			if (selected == board.getCellAt(2, 2))
+			if (selected == board.getCellAt(2, 2)){
 				loc_2_2 = true;
+			break;
+			}
 			else
 				fail("Invalid target selected");
 			// Ensure room is selected if not already visited 100 times
-			assertTrue(loc_2_2);
+			System.out.println(loc_2_2);
 		}
+		assertTrue(loc_2_2);
+
 	}
 	
 	//Testing selecting a location if room is last one visited
@@ -128,11 +131,12 @@ public class GameActionTests {
 		ComputerPlayer player = new ComputerPlayer();
 		Set<BoardCell> visited = new HashSet<BoardCell>();
 		BoardCell testRoom = new BoardCell(2, 2, 'K', DoorDirection.RIGHT);
+		player.setLastVisited(testRoom);
 		// Pick random location if room already visited
 		board.calcTargets(2, 3, 2);
-		visited = board.getVisited();
-		visited.add(testRoom);
-		board.setVisited(visited);
+		//visited = board.getVisited();
+		//visited.add(testRoom);
+		//board.setVisited(visited);
 		boolean loc_2_3 = false;
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {

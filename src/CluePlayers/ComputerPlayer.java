@@ -7,7 +7,6 @@ import java.util.Set;
 
 import clueGame.Board;
 import clueGame.BoardCell;
-import javafx.scene.control.Cell;
 
 public class ComputerPlayer extends Player{
 	
@@ -28,17 +27,28 @@ public class ComputerPlayer extends Player{
 		BoardCell selection = new BoardCell();
 		Set<BoardCell> currentTargets = new HashSet<BoardCell>();
 		currentTargets = targets;
+		
+		if(lastVisited.isRoom() || lastVisited.isDoorway()){
+			currentTargets.remove(lastVisited);
+		}
+		
 		for (BoardCell c : currentTargets){
+			//System.out.println("c is: " + c);
 			if(c.isDoorway()){
 					selection = c;
+					lastVisited = c;
+					//System.out.println(lastVisited);
 					break;
 			}
 			else if(intCounter == randomInt){
 				selection = c;
+				lastVisited = c;
+				//System.out.println(lastVisited);
 				break;
 			}
 			intCounter++;
 		}
+		//System.out.println("selection is: " + selection);
 		return selection;
 	}
 	

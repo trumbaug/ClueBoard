@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 
+import clueGame.BoardCell;
+
 public class Player {
 	int column;
 	int row;
@@ -11,7 +13,16 @@ public class Player {
 	Color color;
 	LinkedList<Card> myCards = new LinkedList<Card>();//Picked a random data structure
 	LinkedList<Card> seenCards; //can change if find more suitable one
+	BoardCell lastVisited = new BoardCell();
 	
+	public BoardCell getLastVisited() {
+		return lastVisited;
+	}
+
+	public void setLastVisited(BoardCell lastVisited) {
+		this.lastVisited = lastVisited;
+	}
+
 	public Player() {
 		super();
 	}
