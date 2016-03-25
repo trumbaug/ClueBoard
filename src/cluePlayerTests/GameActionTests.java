@@ -2,6 +2,7 @@ package cluePlayerTests;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -66,20 +67,17 @@ public class GameActionTests {
 	@Test 
 	public void randomTargetLocationTest(){
 		ComputerPlayer player = new ComputerPlayer();
-		//player = board.getComputerPlayers().get(0);
-		//System.out.println(player);
 		// Pick a location with no rooms in target, just three targets
 		board.calcTargets(7, 0, 2);
-		//System.out.println(board.getTargets());
 		boolean loc_5_0 = false;
 		boolean loc_7_2 = false;
 		boolean loc_9_0 = false;
 		boolean loc_6_1 = false;
 		boolean loc_8_1 = false;
-		// Run the test 100 times
+		
+		// Run the test 100 times to assure that each location is chose when randomly selecting
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
-			//System.out.println(board.getTargets());
 
 			if (selected == board.getCellAt(5, 0))
 				loc_5_0 = true;
@@ -106,20 +104,21 @@ public class GameActionTests {
 	@Test
 	public void notVisitedRoomTargetLocationTest(){
 		ComputerPlayer player = new ComputerPlayer();
+		
 		// Pick room as selected location
 		board.calcTargets(2, 3, 2);
 		boolean loc_2_2 = false;
+		
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
+			System.out.println(selected);
 			if (selected == board.getCellAt(2, 2)){
 				loc_2_2 = true;
 			break;
 			}
-			else
-				fail("Invalid target selected");
+			
 			// Ensure room is selected if not already visited 100 times
-			System.out.println(loc_2_2);
 		}
 		assertTrue(loc_2_2);
 
@@ -131,30 +130,32 @@ public class GameActionTests {
 		ComputerPlayer player = new ComputerPlayer();
 		Set<BoardCell> visited = new HashSet<BoardCell>();
 		BoardCell testRoom = new BoardCell(2, 2, 'K', DoorDirection.RIGHT);
-		player.setLastVisited(testRoom);
 		// Pick random location if room already visited
 		board.calcTargets(2, 3, 2);
-		//visited = board.getVisited();
-		//visited.add(testRoom);
-		//board.setVisited(visited);
-		boolean loc_2_3 = false;
+	
+		boolean loc_2_2 = false;
+		boolean loc_4_3 = false;
+
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
+			player.setLastVisited(testRoom);
+
 			BoardCell selected = player.pickLocation(board.getTargets());
-			int selectRoomCount = 0;
-			
-			if (selected == board.getCellAt(5, 0)){
-				loc_2_3 = true;
-				selectRoomCount++;
+
+			if (selected == board.getCellAt(2, 2)){
+				loc_2_2 = true;
 			}
-			if(0 < selectRoomCount && selectRoomCount <= 2){
-				fail("Invalid target selected");
+			if (selected == board.getCellAt(4, 3)){
+				loc_4_3 = true;
 			}
 		}
 		// Ensure room is selected if not already visited
-		assertTrue(loc_2_3);
+		assertFalse(loc_2_2);
+		assertTrue(loc_4_3);
+
 	}
 	
+	//Test all requirements for disprove suggestion 
 	@Test
 	public void disproveSuggestionTest(){
 		Player humanplayer = new Player();
@@ -284,9 +285,45 @@ public class GameActionTests {
 		
 	}
 	
+	//Test that the computer player makes a valid suggestion based on teh seen cards
 	@Test
 	public void computerPlayerSuggestionTest(){
-		fail("not yet implemented");
+		Card mustardCard = new Card();
+		Card peacockCard = new Card();
+		
+		Card knifeCard = new Card();
+		Card leadpipeCard = new Card();
+		
+		Card kitchenCard = new Card();
+		Card garageCard = new Card();
+		
+		mustardCard = new Card("Colonel Mustard", Card.CardType.PERSON);
+		peacockCard = new Card("Mrs. Peacock", Card.CardType.PERSON);
+
+		knifeCard = new Card("knife", Card.CardType.WEAPON);
+		leadpipeCard = new Card("lead pipe", Card.CardType.WEAPON);
+		
+		kitchenCard = new Card("Kitchen", Card.CardType.ROOM);
+		garageCard = new Card("Garage", Card.CardType.ROOM);
+		
+		//Add mustarcCard, knifeCard and kitchenCard to the seen list
+		board.addSeenCard(mustardCard);
+		board.addSeenCard(knifeCard);
+		board.addSeenCard(kitchenCard);
+		
+		//Place the computer player in the garage and then check that his suggestion doesn't contain any of the seend cards. 
+		//Run this 100 times since the suggestion is calculated randomly from the deck and the seen cards will not always
+		//be pulled from the deck
+		for(int i = 0; i < 100; i++){
+		ComputerPlayer player = new ComputerPlayer(0, 0, "Mrs. White", Color.WHITE);
+		assertFalse(player.makeSuggestion(board, garageCard).contains(mustardCard));
+		assertFalse(player.makeSuggestion(board, garageCard).contains(knifeCard));
+		assertFalse(player.makeSuggestion(board, garageCard).contains(kitchenCard));
+		//Make sure that the correct number of cards is suggested
+		assertEquals(player.makeSuggestion(board, garageCard).size(), 3);
+		}
+		
+
 	}
 
 }

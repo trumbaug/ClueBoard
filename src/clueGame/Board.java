@@ -44,8 +44,19 @@ public class Board {
 	private LinkedList<ComputerPlayer> computerPlayers;
 	private HumanPlayer humanPlayer;
 	private int deckSize;
+	//Change where I allocate space later
+	private LinkedList<Card> seenCards = new LinkedList<Card>();
+
 	
 
+
+	public LinkedList<Card> getSeenCards() {
+		return seenCards;
+	}
+
+	public void setSeenCards(LinkedList<Card> seenCards) {
+		this.seenCards = seenCards;
+	}
 
 	public Board()  {
 		super();
@@ -458,6 +469,8 @@ public class Board {
 			}
 			//If the possible matches vector only contains one element, return that element
 			if(possibleMatches.size() == 1){
+				//Adds this card to the seen cards list for all players to see
+				//seenCards.add(possibleMatches.elementAt(0));
 				return possibleMatches.elementAt(0);
 			}
 			
@@ -466,12 +479,18 @@ public class Board {
 				int maxRand = possibleMatches.size();
 				Random randomGenerator = new Random();
 				int randomInt = randomGenerator.nextInt(maxRand);
+				//Add this card to the seen cards list for all players to see
+				//seenCards.add(possibleMatches.elementAt(randomInt));
 				return possibleMatches.elementAt(randomInt);
 			}
 
 		}
 
 		return null;
+	}
+	
+	public void addSeenCard(Card theCard){
+		this.seenCards.add(theCard);
 	}
 
 	public BoardCell getCellAt(int row, int column) {
