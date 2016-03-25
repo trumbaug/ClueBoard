@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Vector;
 import java.lang.*;
 
 import CluePlayers.Card;
@@ -433,6 +435,42 @@ public class Board {
 		
 		return true;
 	}
+	
+	public Card disproveSuggestion(Solution theSuggestion, Player computerplayer) {
+		//Vector that contains possible matches for each person
+		Vector<Card> possibleMatches = new Vector<Card>();
+		//Loop through each player and get their hand of cards. Then loop through all their cards and see if any cards match the suggestion. If so, add
+		//that card to the possibleMatches vector. 
+		for(Player p: allPlayers){
+			for(Card c: p.getMyCards()){
+				if(c.getCardName() == theSuggestion.person){
+					possibleMatches.addElement(c);
+				}
+				if(c.getCardName() == theSuggestion.weapon){
+					possibleMatches.addElement(c);
+				}
+				if(c.getCardName() == theSuggestion.room){
+					possibleMatches.addElement(c);
+
+				}
+			}
+			//If the possible matches vector only contains one element, return that element
+			if(possibleMatches.size() == 1){
+				return possibleMatches.elementAt(0);
+			}
+			
+			//If the possible matches vector has more than one element, choose the vector index randomy and return that vector. 
+			if(possibleMatches.size() > 1){
+				int maxRand = possibleMatches.size();
+				Random randomGenerator = new Random();
+				int randomInt = randomGenerator.nextInt(maxRand);
+				return possibleMatches.elementAt(randomInt);
+			}
+
+		}
+
+		return null;
+	}
 
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
@@ -529,23 +567,6 @@ public class Board {
 		this.visited = visited;
 	}
 
-	public Card disproveSuggestion(Solution theSuggestion, Player computerplayer) {
-		for(Player p: allPlayers){
-			for(Card c: p.getMyCards()){
-				if(c.getCardName() == theSuggestion.person){
-					return c;
-				}
-				if(c.getCardName() == theSuggestion.weapon){
-					return c;
-				}
-				if(c.getCardName() == theSuggestion.room){
-					return c;
-				}
-			}
 
-		}
-
-		return null;
-	}
 }
 

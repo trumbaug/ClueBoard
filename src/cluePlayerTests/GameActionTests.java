@@ -156,6 +156,8 @@ public class GameActionTests {
 		Player humanplayer = new Player();
 		Player computerplayer1 = new Player();
 		Player computerplayer2 = new Player();
+		Player computerplayer3 = new Player();
+
 		
 		Card mustardCard = new Card();
 		Card peacockCard = new Card();
@@ -175,14 +177,9 @@ public class GameActionTests {
 		kitchenCard = new Card("Kitchen", Card.CardType.ROOM);
 		studioCard = new Card("Studio", Card.CardType.ROOM);
 		
-		computerplayer1.getMyCards().add(mustardCard);
-		computerplayer1.getMyCards().add(leadpipeCard);
 		
-		computerplayer2.getMyCards().add(peacockCard);
-		computerplayer2.getMyCards().add(studioCard);
-		
-		humanplayer.getMyCards().add(kitchenCard);
 		humanplayer.getMyCards().add(knifeCard);
+		humanplayer.getMyCards().add(studioCard);
 		
 		//If no one has a card, return null 
 		
@@ -225,23 +222,30 @@ public class GameActionTests {
 		board.getAllPlayers().add(computerplayer1);
 
 		assertEquals(kitchenCard, board.disproveSuggestion(theSuggestion4, computerplayer1));	
-		
+	
 		//Test for one player, multiple matches
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer2);
+		
 		boolean personCheck = false;
 		boolean roomCheck = false;
 		boolean weaponCheck = false;
 		
+		computerplayer2.getMyCards().add(peacockCard);
+		computerplayer2.getMyCards().add(kitchenCard);
+		computerplayer2.getMyCards().add(leadpipeCard);
+
+		
 		for (int i=0; i<100; i++) {
 			Solution theSuggestionAll = new Solution("Mrs. Peacock", "Kitchen", "lead pipe");
 		
-			if (peacockCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+			if (peacockCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
 				personCheck = true;
-			else if (kitchenCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+			else if (kitchenCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
 				roomCheck = true;
-			else if (leadpipeCard == board.disproveSuggestion(theSuggestionAll, computerplayer1))
+			else if (leadpipeCard == board.disproveSuggestion(theSuggestionAll, computerplayer2))
 				weaponCheck = true;
-			else
-				fail("Invalid target selected");
+			
 		}
 		// Ensure each target was selected at least once
 		assertTrue(personCheck);
@@ -249,6 +253,29 @@ public class GameActionTests {
 		assertTrue(weaponCheck);
 
 		//Test that all players queried
+		computerplayer3.getMyCards().add(mustardCard);
+		
+		//Add all three players to getAllPlayers
+		board.getAllPlayers().clear();
+		board.getAllPlayers().add(computerplayer2); // Has peacock, kitchen and leadpipe
+		board.getAllPlayers().add(computerplayer3); // Has Mustard
+		board.getAllPlayers().add(humanplayer); // knife, studio
+		
+		//Suggestion that no player can disprove
+		Solution theSuggestionAll2 = new Solution("Mrs. White", "Bedroom", "dagger");
+		assertNull(board.disproveSuggestion(theSuggestionAll2, computerplayer2));	
+		
+		//Suggestion that only human can disprove
+		Solution theSuggestionAll3 = new Solution("Mrs. White", "Bedroom", "knife");
+		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll3, computerplayer2));
+		
+		//Make a suggestion that returns null because the person who made the suggestion holds that card
+		Solution theSuggestionAll4 = new Solution("Mrs. Peacock", "Bedroom", "dagger");
+		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll4, computerplayer2));
+		
+		//Make a suggestion that requires the first person to disprove which should be computer player 2
+		Solution theSuggestionAll5 = new Solution("Mrs. Peacock", "Bedroom", "knife");
+		assertEquals(knifeCard, board.disproveSuggestion(theSuggestionAll5, computerplayer3));
 		
 	}
 	
