@@ -10,12 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import CluePlayers.Card;
-import CluePlayers.ComputerPlayer;
-import CluePlayers.HumanPlayer;
-import CluePlayers.Player;
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
+import cluePlayers.Card;
+import cluePlayers.ComputerPlayer;
+import cluePlayers.HumanPlayer;
+import cluePlayers.Player;
 
 public class GameSetupTests {
 	private static Board board;

@@ -11,13 +11,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import CluePlayers.Card;
-import CluePlayers.ComputerPlayer;
-import CluePlayers.Player;
-import CluePlayers.Solution;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
+import cluePlayers.Card;
+import cluePlayers.ComputerPlayer;
+import cluePlayers.Player;
+import cluePlayers.Solution;
 
 public class GameActionTests {
 	private static Board board;

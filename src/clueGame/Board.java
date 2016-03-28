@@ -13,13 +13,13 @@ import java.util.Set;
 import java.util.Vector;
 import java.lang.*;
 
-import CluePlayers.Card;
-import CluePlayers.Card.CardType;
-import CluePlayers.Player;
-import CluePlayers.ComputerPlayer;
-import CluePlayers.HumanPlayer;
-import CluePlayers.Solution;
 import Experiment.BoardCellEx;
+import cluePlayers.Card;
+import cluePlayers.ComputerPlayer;
+import cluePlayers.HumanPlayer;
+import cluePlayers.Player;
+import cluePlayers.Solution;
+import cluePlayers.Card.CardType;
 
 public class Board {
 	private int numRows;

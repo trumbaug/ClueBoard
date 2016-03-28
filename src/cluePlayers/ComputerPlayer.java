@@ -1,4 +1,4 @@
-package CluePlayers;
+package cluePlayers;
 
 import java.awt.Color;
 import java.util.HashSet;

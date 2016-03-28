@@ -1,4 +1,4 @@
-package CluePlayers;
+package cluePlayers;
 
 public class Solution {
 	public String person;
