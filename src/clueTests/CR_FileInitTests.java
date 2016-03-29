@@ -32,7 +32,7 @@ public class CR_FileInitTests {
 	public static void setUp() {
 		// Create a new Board using the valid files. Note that
 		// the default filenames must be attributes of the Board class. 
-		board = new Board();
+		board = new Board("ClueLayout.csv", "ClueLegend.txt");
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}

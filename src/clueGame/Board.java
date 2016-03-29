@@ -42,6 +42,8 @@ public class Board {
 	private LinkedList<Card> roomCards;
 	private LinkedList<Player> allPlayers;
 	private LinkedList<ComputerPlayer> computerPlayers;
+	private LinkedList<BoardCell> adjacentCells;
+
 	private HumanPlayer humanPlayer;
 	private int deckSize;
 	//Change where I allocate space later
@@ -326,7 +328,8 @@ public class Board {
 
 	private void findAllTargets(BoardCell thisCell, int numStep)
 	{
-		LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
+		adjacentCells = new LinkedList<BoardCell>();
+		adjacentCells = adjMatrix.get(thisCell);
 		for(BoardCell cell: adjacentCells)
 		{
 			if(visited.contains(cell)) continue;
