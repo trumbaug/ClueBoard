@@ -197,6 +197,7 @@ public class Board extends JPanel{
 					}
 				}
 			}
+			//Why is this exception occuring????? 
 			catch (Exception e){
 				System.out.println("Cannot create file for writing exception");
 			}
