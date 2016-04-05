@@ -97,7 +97,6 @@ public class GameSetupTests {
 		assertEquals(0, deck.size());
 		int deckSize = board.getDeckSize();
 		int handSize = deckSize/board.getAllPlayers().size();
-		System.out.println(handSize);
 		//Test whether each player has either three or four cards in their hand. 
 		testPlayer = board.getAllPlayers().get(0);
 		assertTrue(testPlayer.getMyCards().size() - handSize == 0 || testPlayer.getMyCards().size() - handSize == 1 );

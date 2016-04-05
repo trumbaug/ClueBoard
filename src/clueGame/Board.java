@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -11,23 +12,26 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
+
+import javax.swing.JPanel;
+
 import java.lang.*;
 
-import Experiment.BoardCellEx;
 import cluePlayers.Card;
+import cluePlayers.Card.CardType;
+import cluePlayers.Player;
 import cluePlayers.ComputerPlayer;
 import cluePlayers.HumanPlayer;
-import cluePlayers.Player;
 import cluePlayers.Solution;
-import cluePlayers.Card.CardType;
+import Experiment.BoardCellEx;
 
-public class Board {
+public class Board extends JPanel{
 	private int numRows;
 	private int numColumns;
 	private int numDoors = 0;
 	public final static int BOARD_SIZE = 50;
 	private BoardCell[][] board;
-	private static Map<Character,String> rooms;
+	public static Map<Character,String> rooms;
 	private Map<BoardCell, LinkedList<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
 	private String boardConfigFile;
@@ -39,11 +43,9 @@ public class Board {
 	private static LinkedList<Card> deck;
 	private LinkedList<Card> suspectCards;
 	private LinkedList<Card> weaponCards;
-	private LinkedList<Card> roomCards;
-	private LinkedList<Player> allPlayers;
+	public LinkedList<Card> roomCards;
+	public LinkedList<Player> allPlayers;
 	private LinkedList<ComputerPlayer> computerPlayers;
-	private LinkedList<BoardCell> adjacentCells;
-
 	private HumanPlayer humanPlayer;
 	private int deckSize;
 	//Change where I allocate space later
@@ -70,6 +72,7 @@ public class Board {
 		rooms = new HashMap<Character,String>();
 		adjMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		deck = new LinkedList<Card>();
+		
 	}
 
 	public Board(String boardConfigFile, String roomConfigFile) {
@@ -194,9 +197,10 @@ public class Board {
 					}
 				}
 			}
-			catch (Exception e)
-			{	
-				throw e;}
+			catch (Exception e){
+				System.out.println("Cannot create file for writing exception");
+			}
+			
 			while (in.hasNext())
 			{
 				numRows++;
@@ -328,8 +332,7 @@ public class Board {
 
 	private void findAllTargets(BoardCell thisCell, int numStep)
 	{
-		adjacentCells = new LinkedList<BoardCell>();
-		adjacentCells = adjMatrix.get(thisCell);
+		LinkedList<BoardCell> adjacentCells = adjMatrix.get(thisCell);
 		for(BoardCell cell: adjacentCells)
 		{
 			if(visited.contains(cell)) continue;
@@ -490,6 +493,40 @@ public class Board {
 		}
 
 		return null;
+	}
+	
+	public void paintComponent(Graphics g){
+		Board board = new Board();
+		board.initialize();
+		super.paintComponent(g);
+
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				board.getCellAt(i, j).drawFill(g);
+			}
+		}
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				board.getCellAt(i, j).drawGrid(g);
+			}
+		}
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				board.getCellAt(i, j).drawDoors(g);
+			}
+		}
+		
+		int PersonCounter = 0;
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				if(board.getCellAt(i, j).isPerson == true){
+				board.getCellAt(i, j).drawPeople(g, allPlayers.get(PersonCounter).getColor() );
+				PersonCounter++;
+				}
+			}
+		}
+
+
 	}
 	
 	public void addSeenCard(Card theCard){

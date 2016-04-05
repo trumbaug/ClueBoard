@@ -112,7 +112,6 @@ public class GameActionTests {
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
-			System.out.println(selected);
 			if (selected == board.getCellAt(2, 2)){
 				loc_2_2 = true;
 			break;
